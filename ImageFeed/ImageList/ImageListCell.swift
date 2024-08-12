@@ -19,5 +19,4 @@ class ImageListCell: UITableViewCell {
     
     @IBOutlet var cellGradient: UIView!
 
-    
 }

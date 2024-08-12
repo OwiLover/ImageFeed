@@ -16,11 +16,11 @@ class GradientView: UIView {
             return CAGradientLayer.classForCoder()
     }
     
-    //перепробовав много всего, толко данное решение смогло заработать, не знаю на сколько оно оптимальное
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        let gradientLayer = layer as! CAGradientLayer
+        guard let gradientLayer = layer as? CAGradientLayer else {
+            return
+        }
         gradientLayer.colors = [firstColor, secondColor]
     }
     
