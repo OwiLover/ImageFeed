@@ -29,7 +29,7 @@ class ImageListViewController: UIViewController {
         cell.cellImage.image = image
         
         cell.dateLabel.text = dateFormatter.string(from: Date())
-        
+
         let buttonImageName = (indexPath.row % 2 != 0) ? "No Active" : "Active"
         
         cell.likeButton.setImage(UIImage(named: buttonImageName), for: .normal)
