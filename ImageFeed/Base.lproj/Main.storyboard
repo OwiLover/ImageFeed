@@ -31,6 +31,9 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="62S-bM-4D1" userLabel="Cell Image">
                                                     <rect key="frame" x="16" y="4" width="361" height="188"/>
                                                     <color key="backgroundColor" name="YP Background"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="lSj-6V-ycm"/>
+                                                    </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="16"/>
@@ -38,6 +41,9 @@
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCO-NB-ACc" userLabel="CellGradient" customClass="GradientView" customModule="ImageFeed" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="164.33333333333334" width="361" height="27.666666666666657"/>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THu-7T-cCa" userLabel="Date Label">
                                                     <rect key="frame" x="24" y="168.33333333333334" width="345" height="15.666666666666657"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -61,17 +67,22 @@
                                             <constraints>
                                                 <constraint firstItem="62S-bM-4D1" firstAttribute="top" secondItem="AhL-V1-0MK" secondAttribute="top" id="3Ly-un-nu7"/>
                                                 <constraint firstItem="62S-bM-4D1" firstAttribute="leading" secondItem="IrM-aX-vSb" secondAttribute="leading" constant="16" id="7U6-5a-6yv"/>
+                                                <constraint firstItem="nCO-NB-ACc" firstAttribute="bottom" secondItem="62S-bM-4D1" secondAttribute="bottom" id="GtC-gV-25K"/>
+                                                <constraint firstItem="THu-7T-cCa" firstAttribute="top" secondItem="nCO-NB-ACc" secondAttribute="top" constant="4" id="Ps1-Qr-h42"/>
                                                 <constraint firstAttribute="bottom" secondItem="62S-bM-4D1" secondAttribute="bottom" constant="4" id="SmP-rs-F94"/>
                                                 <constraint firstItem="THu-7T-cCa" firstAttribute="leading" secondItem="62S-bM-4D1" secondAttribute="leading" constant="8" id="TPc-zJ-TkT"/>
                                                 <constraint firstItem="62S-bM-4D1" firstAttribute="trailing" secondItem="AhL-V1-0MK" secondAttribute="trailing" id="b9b-4J-iWd"/>
                                                 <constraint firstAttribute="trailing" secondItem="62S-bM-4D1" secondAttribute="trailing" constant="16" id="ejE-3s-sQ6"/>
                                                 <constraint firstItem="THu-7T-cCa" firstAttribute="bottom" secondItem="62S-bM-4D1" secondAttribute="bottom" constant="-8" id="iuK-JS-vn9"/>
                                                 <constraint firstItem="THu-7T-cCa" firstAttribute="trailing" secondItem="62S-bM-4D1" secondAttribute="trailing" constant="-8" id="keg-PC-lTC"/>
+                                                <constraint firstItem="nCO-NB-ACc" firstAttribute="trailing" secondItem="62S-bM-4D1" secondAttribute="trailing" id="mXt-RY-8Ct"/>
+                                                <constraint firstItem="nCO-NB-ACc" firstAttribute="leading" secondItem="62S-bM-4D1" secondAttribute="leading" id="om6-D1-GAC"/>
                                                 <constraint firstItem="62S-bM-4D1" firstAttribute="top" secondItem="IrM-aX-vSb" secondAttribute="top" constant="4" id="u66-EY-B5O"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="YP Background"/>
                                         <connections>
+                                            <outlet property="cellGradient" destination="nCO-NB-ACc" id="7VL-x9-UsJ"/>
                                             <outlet property="cellImage" destination="62S-bM-4D1" id="hXp-v0-iGQ"/>
                                             <outlet property="dateLabel" destination="THu-7T-cCa" id="xXv-6N-v23"/>
                                             <outlet property="likeButton" destination="AhL-V1-0MK" id="YLz-Lf-mMw"/>

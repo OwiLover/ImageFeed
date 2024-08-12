@@ -17,4 +17,7 @@ class ImageListCell: UITableViewCell {
     
     @IBOutlet var likeButton: UIButton!
     
+    @IBOutlet var cellGradient: UIView!
+
+    
 }

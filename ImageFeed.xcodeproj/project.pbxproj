@@ -14,6 +14,7 @@
 		2A432E3D2C61591700018D50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A432E3C2C61591700018D50 /* Assets.xcassets */; };
 		2A432E402C61591700018D50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 2A432E3F2C61591700018D50 /* Base */; };
 		2A432EA02C6952F900018D50 /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A432E9F2C6952F900018D50 /* ImageListCell.swift */; };
+		2A432EA52C69CB7000018D50 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A432EA42C69CB7000018D50 /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		2A432E462C61591700018D50 /* ImageFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A432E502C61591700018D50 /* ImageFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A432E9F2C6952F900018D50 /* ImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
+		2A432EA42C69CB7000018D50 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				2A432E3C2C61591700018D50 /* Assets.xcassets */,
 				2A432E3E2C61591700018D50 /* LaunchScreen.storyboard */,
 				2A432E412C61591700018D50 /* Info.plist */,
+				2A432EA42C69CB7000018D50 /* GradientView.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 			files = (
 				2A432E382C61591600018D50 /* ImageListViewController.swift in Sources */,
 				2A432EA02C6952F900018D50 /* ImageListCell.swift in Sources */,
+				2A432EA52C69CB7000018D50 /* GradientView.swift in Sources */,
 				2A432E342C61591600018D50 /* AppDelegate.swift in Sources */,
 				2A432E362C61591600018D50 /* SceneDelegate.swift in Sources */,
 			);
