@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GradientView: UIView {
+final class GradientView: UIView {
     
     let firstColor = UIColor.ypBlack.withAlphaComponent(0).cgColor
     let secondColor = UIColor.ypBlack.withAlphaComponent(0.2).cgColor
@@ -18,10 +18,11 @@ class GradientView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
         guard let gradientLayer = layer as? CAGradientLayer else {
             return
         }
+        
         gradientLayer.colors = [firstColor, secondColor]
     }
-    
 }

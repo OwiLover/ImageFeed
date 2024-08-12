@@ -7,16 +7,24 @@
 
 import UIKit
 
-class ImageListCell: UITableViewCell {
+final class ImageListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImageListCell"
     
-    @IBOutlet var cellImage: UIImageView!
+    @IBOutlet private var cellImage: UIImageView!
+    @IBOutlet private var dateLabel: UILabel!
+    @IBOutlet private var likeButton: UIButton!
+    @IBOutlet private var cellGradient: UIView!
     
-    @IBOutlet var dateLabel: UILabel!
+    func setCellImage(image: UIImage) {
+        cellImage.image = image
+    }
     
-    @IBOutlet var likeButton: UIButton!
+    func setDateLabel(date: String) {
+        dateLabel.text = date
+    }
     
-    @IBOutlet var cellGradient: UIView!
-
+    func setLikeButtonImage(image: UIImage) {
+        likeButton.setImage(image, for: .normal)
+    }
 }
