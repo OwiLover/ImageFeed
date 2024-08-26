@@ -30,12 +30,16 @@ class SingleImageViewController: UIViewController {
         let activityController = UIActivityViewController(activityItems: [image], applicationActivities: .none)
         present(activityController, animated: true)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         guard let image else { return }
+        
         scrollView.delegate = self
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
+        
         imageView.frame.size = image.size
         imageView.image = image
 
@@ -84,7 +88,8 @@ extension SingleImageViewController: UIScrollViewDelegate {
         if height > 0 {
             scrollView.contentInset.top = height/2
             scrollView.contentInset.bottom = height/2
-        } else {
+        }
+        else {
             scrollView.contentInset.top = 0
             scrollView.contentInset.bottom = 0
         }

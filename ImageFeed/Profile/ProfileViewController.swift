@@ -61,9 +61,7 @@ class ProfileViewController: UIViewController {
         let button = UIButton()
         
         button.setTitle(.none, for: .normal)
-        
         button.setImage(image, for: .normal)
-        
         button.tintColor = color
         
         view.addSubview(button)
@@ -95,9 +93,7 @@ class ProfileViewController: UIViewController {
         let label = UILabel()
         
         label.text = text
-        
         label.font = font
-        
         label.textColor = color
         
         view.addSubview(label)
