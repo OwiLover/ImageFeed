@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     private var avatarImageView: UIImageView?
     private var logoutButton: UIButton?
@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController {
         descLabel = addLabel(under: tagLabel, text: "Hello, World!", font: UIFont.systemFont(ofSize: 13), color: .ypWhite)
     }
     
-    func addImageView(under someView: UIView?, image: UIImage?) -> UIImageView? {
+    private func addImageView(under someView: UIView?, image: UIImage?) -> UIImageView? {
         
         guard let someView else { return nil }
         
@@ -55,7 +55,7 @@ class ProfileViewController: UIViewController {
         return imageView
     }
     
-    func addButton(nextTo someView: UIView?, image: UIImage?, color: UIColor) -> UIButton? {
+    private func addButton(nextTo someView: UIView?, image: UIImage?, color: UIColor) -> UIButton? {
         guard let someView else { return nil }
         
         let button = UIButton()
@@ -87,7 +87,7 @@ class ProfileViewController: UIViewController {
         return button
     }
     
-    func addLabel(under someView: UIView?, text: String?, font: UIFont, color: UIColor) -> UILabel? {
+    private func addLabel(under someView: UIView?, text: String?, font: UIFont, color: UIColor) -> UILabel? {
         guard let someView else { return nil }
         
         let label = UILabel()
