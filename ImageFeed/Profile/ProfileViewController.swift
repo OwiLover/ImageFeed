@@ -23,7 +23,7 @@ final class ProfileViewController: UIViewController {
 
         avatarImageView = addImageView(under: view, image: UIImage(named: "Photo"))
         
-        logoutButton = addButton(nextTo: avatarImageView, image: UIImage(systemName: "ipad.and.arrow.forward"), color: .ypRed)
+        logoutButton = addButton(nextTo: avatarImageView, image: UIImage(named: "Exit"), color: .ypRed)
         
         nameLabel = addLabel(under: avatarImageView, text: "Екатерина Новикова", font: UIFont.systemFont(ofSize: 23, weight: .bold), color: .ypWhite)
         tagLabel = addLabel(under: nameLabel, text: "@ekaterina_nov", font: UIFont.systemFont(ofSize: 13), color: .ypGray)
