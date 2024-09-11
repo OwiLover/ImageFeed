@@ -67,16 +67,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(button)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-/*  Вопрос!
-    У меня вопрос по поводу расположения кнопки в правом углу:
-    В Фигме размер 24 на 24, в то время как минимальный размер по гайдлайнам Apple 44 на 44
-    При размере 44 на 44 отступ в 24 слишком большой и не соответствует макету (ровно также, как и кнопка выхода из просмотра большого фото)
-    Немного посчитав*, пришёл к выводу, что отступ в 14 соответствует макету
-    -> (24 - (44/2 - 24/2)) = 14
-    Правильно ли я всё сделал или следовало проигнорировать разницу в размерах?
-*/
-        
+                
         NSLayoutConstraint.activate([
             button.widthAnchor.constraint(equalToConstant: 44),
             button.heightAnchor.constraint(equalToConstant: 44),
