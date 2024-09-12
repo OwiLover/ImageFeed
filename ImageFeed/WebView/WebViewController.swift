@@ -8,11 +8,11 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController {
+final class WebViewController: UIViewController {
     
-    var progressView: UIProgressView?
+    private var progressView: UIProgressView?
     
-    var webView: WKWebView?
+    private var webView: WKWebView?
     
     weak var delegate: WebViewControllerDelegate?
     
@@ -138,7 +138,7 @@ class WebViewController: UIViewController {
     }
     
     @objc
-    func didTapBackButton() {
+    private func didTapBackButton() {
         delegate?.webViewControllerDidCancel(self)
     }
 }

@@ -22,24 +22,6 @@ final class OAuth2Service {
         
     }
     
-    func makeOAuthTokenRequest(code: String) throws -> URLRequest {
-        guard let baseURL = URL(string: "https://unsplash.com"),
-              let url = URL(
-                  string: "/oauth/token"
-                  + "?client_id=\(Constants.accessKey)"
-                  + "&&client_secret=\(Constants.secretKey)"
-                  + "&&redirect_uri=\(Constants.redirectURI)"
-                  + "&&code=\(code)"
-                  + "&&grant_type=authorization_code",
-                  relativeTo: baseURL
-              )
-        else { throw NetworkError.loadingError }
-
-         var request = URLRequest(url: url)
-         request.httpMethod = "POST"
-         return request
-     }
-    
     func fetchAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         do {
             let tokenRequest = try makeOAuthTokenRequest(code: code)
@@ -66,6 +48,24 @@ final class OAuth2Service {
             completion(.failure(error))
         }
     }
+    
+    private func makeOAuthTokenRequest(code: String) throws -> URLRequest {
+        guard let baseURL = URL(string: "https://unsplash.com"),
+              let url = URL(
+                  string: "/oauth/token"
+                  + "?client_id=\(Constants.accessKey)"
+                  + "&&client_secret=\(Constants.secretKey)"
+                  + "&&redirect_uri=\(Constants.redirectURI)"
+                  + "&&code=\(code)"
+                  + "&&grant_type=authorization_code",
+                  relativeTo: baseURL
+              )
+        else { throw NetworkError.loadingError }
+
+         var request = URLRequest(url: url)
+         request.httpMethod = "POST"
+         return request
+     }
 }
 
 extension URLSession {
@@ -92,7 +92,6 @@ extension URLSession {
                 fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
             }
         })
-        
         return task
     }
 }

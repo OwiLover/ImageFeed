@@ -7,15 +7,12 @@
 
 import Foundation
 
-class OAuthTokenStorage {
-    
-    static let shared = OAuthTokenStorage()
-    
+final class OAuthTokenStorage {
     enum Keys: String {
         case token = "token"
     }
     
-    private let storage: UserDefaults = .standard
+    static let shared = OAuthTokenStorage()
     
     var token: String? {
         get {
@@ -24,5 +21,11 @@ class OAuthTokenStorage {
         set(value) {
             storage.set(value, forKey: Keys.token.rawValue)
         }
+    }
+
+    private let storage: UserDefaults = .standard
+    
+    private init() {
+        
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
     private let storage = OAuthTokenStorage.shared
     
     private let authSegueIdentifier = "AuthenticationScreenSegueIdentifier"
