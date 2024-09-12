@@ -153,7 +153,6 @@
                     </view>
                     <connections>
                         <segue destination="PtS-s5-3Hg" kind="presentation" identifier="AuthenticationScreenSegueIdentifier" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="zL1-Nq-JW5"/>
-                        <segue destination="3Ya-VR-HWp" kind="presentation" identifier="ImageListScreenSegueIdentifier" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="Qoa-c9-kJv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7A2-c6-bHX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

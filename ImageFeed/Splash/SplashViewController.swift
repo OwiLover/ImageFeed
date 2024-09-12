@@ -12,7 +12,7 @@ class SplashViewController: UIViewController {
     
     private let authSegueIdentifier = "AuthenticationScreenSegueIdentifier"
     
-    private let imageListSegueIdentifier = "ImageListScreenSegueIdentifier"
+//    private let imageListSegueIdentifier = "ImageListScreenSegueIdentifier"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,8 @@ class SplashViewController: UIViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     
     /*
-     Вопрос: Можно ли использовать в качестве перехода на ImageListViewController использовать segue, протестировав пришёл к выводу, что функциональность и внешний вид не меняются
+     Вопрос: Какие могут быть последствия, если использовать в качестве перехода на ImageListViewController segue?
+     Протестировав не заметил, что функциональность и внешний вид меняются
      */
     
     func didAuthenticate(_ vc: AuthViewController) {
