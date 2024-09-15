@@ -44,12 +44,14 @@ final class OAuth2Service {
                         completion(.failure(NetworkError.decodingError))
                     }
                 case .failure(let error):
+                    print(error)
                     completion(.failure(error))
                 }
             }
             sessionTask.resume()
         }
         catch {
+            print(error)
             completion(.failure(error))
         }
     }
