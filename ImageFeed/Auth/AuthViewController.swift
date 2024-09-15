@@ -9,9 +9,9 @@ import UIKit
 
 final class AuthViewController: UIViewController {
     
-    private let webViewIdentifier = "ShowWebView"
+    weak var delegate: AuthViewControllerDelegate?
     
-    var delegate: AuthViewControllerDelegate?
+    private let webViewIdentifier = "ShowWebView"
     
     private let oauthTokenStorage = OAuthTokenStorage.shared
     
@@ -37,19 +37,23 @@ final class AuthViewController: UIViewController {
     }
     
     private func createButton() {
-        let button = UIButton()
-        
-        button.setTitle("Войти", for: .normal)
-        button.setTitleColor(.ypBlack, for: .normal)
-        
-        let font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        button.titleLabel?.font = font
-        
-        button.backgroundColor = .ypWhite
-        button.layer.cornerRadius = 16
-        button.layer.masksToBounds = true
-        
-        button.addTarget(self, action: #selector(action), for: .touchUpInside)
+        let button:UIButton = {
+            let button = UIButton()
+            
+            button.setTitle("Войти", for: .normal)
+            button.setTitleColor(.ypBlack, for: .normal)
+            
+            let font = UIFont.systemFont(ofSize: 17, weight: .bold)
+            button.titleLabel?.font = font
+            
+            button.backgroundColor = .ypWhite
+            button.layer.cornerRadius = 16
+            button.layer.masksToBounds = true
+            
+            button.addTarget(self, action: #selector(didTabButton), for: .touchUpInside)
+            
+            return button
+        }()
         
         view.addSubview(button)
         
@@ -94,7 +98,7 @@ final class AuthViewController: UIViewController {
     }
     
     @objc
-    private func action() {
+    private func didTabButton() {
        performSegue(withIdentifier: webViewIdentifier, sender: self)
     }
 }
@@ -106,20 +110,19 @@ extension AuthViewController: WebViewControllerDelegate {
         oauth2Service.fetchAuthToken(code: code) { result in
             switch result {
             case .success(let token):
-                print(token)
                 self.oauthTokenStorage.token = token
                 self.delegate?.didAuthenticate(self)
             case .failure(let error):
-                print("Something went wrong: " + error.localizedDescription)
+                print("Something went wrong: ", error)
             }
         }
     }
     /*
      Вопрос: можно ли использовать Pop из navigation контроллера
-     Протестировав пришёл к выводу, что это не влияет на функциональность приложения, но возвращение на AuthViewController происходит более красиво
+     Протестировав пришёл к выводу, что это не влияет на функциональность приложения, но возвращение на AuthViewController происходит без лишних анимаций, создаётся ощущение, будто dismiss вызванный из WebViewController также влияет и на AuthViewController, он также исчезает.
      */
     func webViewControllerDidCancel(_ vc: WebViewController) {
-        vc.dismiss(animated: true)
+        vc.dismiss(animated: false)
 //        navigationController?.popViewController(animated: true)
     }
 }

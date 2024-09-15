@@ -12,8 +12,6 @@ final class SplashViewController: UIViewController {
     
     private let authSegueIdentifier = "AuthenticationScreenSegueIdentifier"
     
-//    private let imageListSegueIdentifier = "ImageListScreenSegueIdentifier"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -23,7 +21,6 @@ final class SplashViewController: UIViewController {
         
         if storage.token != nil {
             switchToTabBarController()
-//            performSegue(withIdentifier: imageListSegueIdentifier, sender: nil)
         }
         else {
             performSegue(withIdentifier: authSegueIdentifier, sender: nil)
@@ -32,7 +29,7 @@ final class SplashViewController: UIViewController {
     
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else {
-            assertionFailure("Invalid window configuration")
+            print("Invalid window configuration")
             return
         }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
@@ -45,14 +42,8 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     
-    /*
-     Вопрос: Какие могут быть последствия, если использовать в качестве перехода на ImageListViewController segue?
-     Протестировав не заметил, что функциональность и внешний вид меняются
-     */
-    
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
-//        performSegue(withIdentifier: imageListSegueIdentifier, sender: nil)
         switchToTabBarController()
     }
     
@@ -62,7 +53,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                 let navigationController = segue.destination as? UINavigationController,
                 let viewController = navigationController.viewControllers[0] as? AuthViewController
             else {
-                assertionFailure("Failed to prepare for \(authSegueIdentifier)")
+                print("Failed to prepare for \(authSegueIdentifier)")
                 return
             }
             viewController.delegate = self

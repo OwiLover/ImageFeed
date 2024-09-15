@@ -10,15 +10,15 @@ import WebKit
 
 final class WebViewController: UIViewController {
     
-    private var progressView: UIProgressView?
-    
-    private var webView: WKWebView?
-    
-    weak var delegate: WebViewControllerDelegate?
-    
     enum WebViewConstants {
         static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     }
+    
+    weak var delegate: WebViewControllerDelegate?
+    
+    private var progressView: UIProgressView?
+    
+    private var webView: WKWebView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,11 +120,6 @@ final class WebViewController: UIViewController {
         webView.load(request)
     }
     
-/*  После долгих исследований было принято решение скрыть BackButton и создать Левую кнопку.
-    Переопределение Action для BackButton можно делать только после версии iOS 16
-    (как минимум, так пишет компилятор и об этом говорят на Stackoverflow)
-    Из-за этого встаёт вопрос, есть ли смысл в определении BackButton в AuthView, если она всё равно исчезает при переходе?
- */
     private func createNewBackButton() {
         let iconName = "BackwardDark"
 

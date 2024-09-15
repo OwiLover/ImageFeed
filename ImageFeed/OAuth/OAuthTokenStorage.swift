@@ -25,7 +25,5 @@ final class OAuthTokenStorage {
 
     private let storage: UserDefaults = .standard
     
-    private init() {
-        
-    }
+    private init() {}
 }
