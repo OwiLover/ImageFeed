@@ -12,6 +12,10 @@ final class SplashViewController: UIViewController {
     
     private let authSegueIdentifier = "AuthenticationScreenSegueIdentifier"
     
+    deinit {
+        print("SplashView was deleted!")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

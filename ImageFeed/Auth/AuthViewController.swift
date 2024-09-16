@@ -17,6 +17,16 @@ final class AuthViewController: UIViewController {
     
     private let oauth2Service = OAuth2Service.shared
     
+    
+    /*
+     Для уверенности решил написать deinit для интересующих viewController'ов, чтобы проследить за последовательностью исчезновения
+     и присутствием удаления
+     Вопрос, насколько эффективен данный подход и есть ли другие способы обнаружения retain cycl'ов, помимо детального просмотра в дебагинге?
+     */
+    deinit {
+        print("AuthView was deleted!")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,11 +115,10 @@ final class AuthViewController: UIViewController {
 
 extension AuthViewController: WebViewControllerDelegate {
     func webViewController(_ vc: WebViewController, didAuthenticateWithCode code: String) {
-        vc.dismiss(animated: true)
-        
-        oauth2Service.fetchAuthToken(code: code) { result in
+        oauth2Service.fetchAuthToken(code: code) { [weak self] result in
             switch result {
             case .success(let token):
+                guard let self else { return }
                 self.oauthTokenStorage.token = token
                 self.delegate?.didAuthenticate(self)
             case .failure(let error):
@@ -117,12 +126,8 @@ extension AuthViewController: WebViewControllerDelegate {
             }
         }
     }
-    /*
-     Вопрос: можно ли использовать Pop из navigation контроллера
-     Протестировав пришёл к выводу, что это не влияет на функциональность приложения, но возвращение на AuthViewController происходит без лишних анимаций, создаётся ощущение, будто dismiss вызванный из WebViewController также влияет и на AuthViewController, он также исчезает.
-     */
+
     func webViewControllerDidCancel(_ vc: WebViewController) {
-        vc.dismiss(animated: false)
-//        navigationController?.popViewController(animated: true)
+        vc.dismiss(animated: true)
     }
 }

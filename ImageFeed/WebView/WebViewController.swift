@@ -8,6 +8,12 @@
 import UIKit
 import WebKit
 
+enum WebViewErrors: Error {
+    case urlComponentsError
+    case badUrlError
+    case codeItemError
+}
+
 final class WebViewController: UIViewController {
     
     enum WebViewConstants {
@@ -19,6 +25,10 @@ final class WebViewController: UIViewController {
     private var progressView: UIProgressView?
     
     private var webView: WKWebView?
+    
+    deinit {
+        print("WebView was deleted!")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +112,7 @@ final class WebViewController: UIViewController {
     
     private func loadAuthView(webView: WKWebView?) {
         guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString), let webView else {
+            print(WebViewErrors.urlComponentsError)
             return
         }
         
@@ -113,6 +124,7 @@ final class WebViewController: UIViewController {
         ]
         
         guard let url = urlComponents.url else {
+            print(WebViewErrors.badUrlError)
             return
         }
         
@@ -158,6 +170,7 @@ extension WebViewController: WKNavigationDelegate {
         {
             return codeItem.value
         } else {
+            print(WebViewErrors.codeItemError)
             return nil
         }
     }
