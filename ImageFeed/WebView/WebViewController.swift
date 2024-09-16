@@ -11,7 +11,7 @@ import WebKit
 enum WebViewErrors: Error {
     case urlComponentsError
     case badUrlError
-    case codeItemError
+    case codeItemIsNil
 }
 
 final class WebViewController: UIViewController {
@@ -170,7 +170,7 @@ extension WebViewController: WKNavigationDelegate {
         {
             return codeItem.value
         } else {
-            print(WebViewErrors.codeItemError)
+            print(WebViewErrors.codeItemIsNil)
             return nil
         }
     }
