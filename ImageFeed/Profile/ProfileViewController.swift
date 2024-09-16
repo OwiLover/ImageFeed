@@ -9,37 +9,24 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    private var avatarImageView: UIImageView?
-    private var logoutButton: UIButton?
-    private var nameLabel: UILabel?
-    private var tagLabel: UILabel?
-    private var descLabel: UILabel?
-    private var exitButton: UIButton?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .ypBlack
 
-        avatarImageView = addImageView(under: view, image: UIImage(named: "Photo"))
-        
-        logoutButton = addButton(nextTo: avatarImageView, image: UIImage(named: "Exit"), color: .ypRed)
-        
-        nameLabel = addLabel(under: avatarImageView, text: "Екатерина Новикова", font: UIFont.systemFont(ofSize: 23, weight: .bold), color: .ypWhite)
-        tagLabel = addLabel(under: nameLabel, text: "@ekaterina_nov", font: UIFont.systemFont(ofSize: 13), color: .ypGray)
-        descLabel = addLabel(under: tagLabel, text: "Hello, World!", font: UIFont.systemFont(ofSize: 13), color: .ypWhite)
+        configureView()
     }
     
     private func addImageView(under someView: UIView?, image: UIImage?) -> UIImageView? {
-        
         guard let someView else { return nil }
         
-        let imageView = UIImageView(image: image ?? UIImage(systemName: "person.crop.circle.fill"))
-        
-        imageView.tintColor = .ypGray
-    
-        imageView.layer.cornerRadius = 35
-        imageView.layer.masksToBounds = true
+        let imageView: UIImageView = {
+            let imageView = UIImageView(image: image ?? UIImage(systemName: "person.crop.circle.fill"))
+            
+            imageView.tintColor = .ypGray
+            imageView.layer.cornerRadius = 35
+            imageView.layer.masksToBounds = true
+            
+            return imageView
+        }()
         
         view.addSubview(imageView)
 
@@ -58,25 +45,19 @@ final class ProfileViewController: UIViewController {
     private func addButton(nextTo someView: UIView?, image: UIImage?, color: UIColor) -> UIButton? {
         guard let someView else { return nil }
         
-        let button = UIButton()
-        
-        button.setTitle(.none, for: .normal)
-        button.setImage(image, for: .normal)
-        button.tintColor = color
+        let button:UIButton = {
+            let button = UIButton()
+            
+            button.setTitle(.none, for: .normal)
+            button.setImage(image, for: .normal)
+            button.tintColor = color
+            return button
+        }()
         
         view.addSubview(button)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-/*  Вопрос!
-    У меня вопрос по поводу расположения кнопки в правом углу:
-    В Фигме размер 24 на 24, в то время как минимальный размер по гайдлайнам Apple 44 на 44
-    При размере 44 на 44 отступ в 24 слишком большой и не соответствует макету (ровно также, как и кнопка выхода из просмотра большого фото)
-    Немного посчитав*, пришёл к выводу, что отступ в 14 соответствует макету
-    -> (24 - (44/2 - 24/2)) = 14
-    Правильно ли я всё сделал или следовало проигнорировать разницу в размерах?
-*/
-        
+                
         NSLayoutConstraint.activate([
             button.widthAnchor.constraint(equalToConstant: 44),
             button.heightAnchor.constraint(equalToConstant: 44),
@@ -90,11 +71,14 @@ final class ProfileViewController: UIViewController {
     private func addLabel(under someView: UIView?, text: String?, font: UIFont, color: UIColor) -> UILabel? {
         guard let someView else { return nil }
         
-        let label = UILabel()
-        
-        label.text = text
-        label.font = font
-        label.textColor = color
+        let label:UILabel = {
+            let label = UILabel()
+            
+            label.text = text
+            label.font = font
+            label.textColor = color
+            return label
+        }()
         
         view.addSubview(label)
         
@@ -106,5 +90,15 @@ final class ProfileViewController: UIViewController {
         ])
         
         return label
+    }
+    
+    private func configureView() {
+        view.backgroundColor = .ypBlack
+        
+        let avatarImageView = addImageView(under: view, image: UIImage(named: "Photo"))
+        _ = addButton(nextTo: avatarImageView, image: UIImage(named: "Exit"), color: .ypRed)
+        let nameLabel = addLabel(under: avatarImageView, text: "Екатерина Новикова", font: UIFont.systemFont(ofSize: 23, weight: .bold), color: .ypWhite)
+        let tagLabel = addLabel(under: nameLabel, text: "@ekaterina_nov", font: UIFont.systemFont(ofSize: 13), color: .ypGray)
+        _ = addLabel(under: tagLabel, text: "Hello, World!", font: UIFont.systemFont(ofSize: 13), color: .ypWhite)
     }
 }
