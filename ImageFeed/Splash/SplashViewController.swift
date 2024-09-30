@@ -7,10 +7,19 @@
 
 import UIKit
 
+enum SplashViewErrors: Error {
+    case badTransition
+    case invalidWindowConfiguration
+    case tokenIsNil
+    case selfIsNil
+    case profileImageFetchError(Error)
+    case profileFetchError(Error)
+}
+
 final class SplashViewController: UIViewController {
     private let storage = OAuthTokenStorage.shared
     
-    private let authSegueIdentifier = "AuthenticationScreenSegueIdentifier"
+    private let navigationControllerIdentifier = "NavigationController"
     
     private let profileService = ProfileService.shared
     
@@ -33,10 +42,10 @@ final class SplashViewController: UIViewController {
         }
         else {
             let storyBoard = UIStoryboard(name: "Main", bundle: .main)
-            guard let navigationController = storyBoard.instantiateViewController(withIdentifier: "NavigationController") as? UINavigationController,
+            guard let navigationController = storyBoard.instantiateViewController(withIdentifier: navigationControllerIdentifier) as? UINavigationController,
             let authViewController = navigationController.viewControllers[0] as? AuthViewController
             else {
-                print("Can't switch to authViewController!")
+                print(SplashViewErrors.badTransition)
                 return
             }
             authViewController.delegate = self
@@ -48,7 +57,7 @@ final class SplashViewController: UIViewController {
     
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else {
-            print("Invalid window configuration")
+            print(SplashViewErrors.invalidWindowConfiguration)
             return
         }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
@@ -65,6 +74,7 @@ extension SplashViewController: AuthViewControllerDelegate {
         vc.dismiss(animated: true)
         
         guard let token = storage.token else {
+            print(SplashViewErrors.tokenIsNil)
             return
         }
         fetchProfile(token)
@@ -74,6 +84,7 @@ extension SplashViewController: AuthViewControllerDelegate {
         UIBlockingProgressHUD.show()
         profileService.fetchProfile(token) { [weak self] result in
             guard let self else {
+                print(SplashViewErrors.selfIsNil)
                 return
             }
             UIBlockingProgressHUD.dismiss()
@@ -85,13 +96,13 @@ extension SplashViewController: AuthViewControllerDelegate {
                     case.success(let result):
                         print("We did it! ", result)
                     case.failure(let error):
-                        print(error)
+                        print(SplashViewErrors.profileImageFetchError(error))
                     }
                 }
                 self.switchToTabBarController()
 
             case .failure(let error):
-                print("Something went wrong: ", error)
+                print(SplashViewErrors.profileFetchError(error))
                 break
             }
         }
