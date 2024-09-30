@@ -118,7 +118,7 @@ final class ProfileViewController: UIViewController {
     private func configureView(nameText: String, tagText: String, bioText: String?) {
         view.backgroundColor = .ypBlack
         
-        self.avatarImageView = addImageView(under: view, image: UIImage(systemName: "person.crop.circle.fill"))
+        self.avatarImageView = addImageView(under: view, image: nil)
         _ = addButton(nextTo: avatarImageView, image: UIImage(named: "Exit"), color: .ypRed)
         let nameLabel = addLabel(under: avatarImageView, text: nameText, font: UIFont.systemFont(ofSize: 23, weight: .bold), color: .ypWhite)
         let tagLabel = addLabel(under: nameLabel, text: tagText, font: UIFont.systemFont(ofSize: 13), color: .ypGray)
