@@ -22,6 +22,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureSplashView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -31,7 +32,16 @@ final class SplashViewController: UIViewController {
             fetchProfile(token)
         }
         else {
-            performSegue(withIdentifier: authSegueIdentifier, sender: nil)
+            let storyBoard = UIStoryboard(name: "Main", bundle: .main)
+            guard let navigationController = storyBoard.instantiateViewController(withIdentifier: "NavigationController") as? UINavigationController,
+            let authViewController = navigationController.viewControllers[0] as? AuthViewController
+            else {
+                return
+            }
+            authViewController.delegate = self
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.modalTransitionStyle = .crossDissolve
+            present(navigationController, animated: true)
         }
     }
     
@@ -86,19 +96,23 @@ extension SplashViewController: AuthViewControllerDelegate {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == authSegueIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else {
-                print("Failed to prepare for \(authSegueIdentifier)")
-                return
-            }
-            viewController.delegate = self
-            
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+    private func configureSplashView() {
+        view.backgroundColor = .ypBlack
+        
+        let logoImageView: UIImageView = {
+            let image = UIImage(named: "YPLogo")
+            let imageView = UIImageView(image: image)
+            return imageView
+        }()
+        
+        view.addSubview(logoImageView)
+        
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            logoImageView.widthAnchor.constraint(equalToConstant: 75),
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 }

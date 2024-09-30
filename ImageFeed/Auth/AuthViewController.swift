@@ -104,7 +104,11 @@ final class AuthViewController: UIViewController {
     
     @objc
     private func didTabButton() {
-       performSegue(withIdentifier: webViewIdentifier, sender: self)
+//        let webViewController = WebViewController()
+//        webViewController.delegate = self
+//        webViewController.modalPresentationStyle = .overFullScreen
+//        present(webViewController, animated: true)
+        performSegue(withIdentifier: webViewIdentifier, sender: nil)
     }
 }
 

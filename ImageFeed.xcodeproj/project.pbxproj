@@ -25,6 +25,7 @@
 		2A433DF22CA5AC79007C4524 /* JSONDecoder+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A433DF12CA5AC79007C4524 /* JSONDecoder+Extentions.swift */; };
 		2A433DF52CA9AA50007C4524 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2A433DF42CA9AA50007C4524 /* Kingfisher */; };
 		2A433DF82CAA19F9007C4524 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 2A433DF72CAA19F9007C4524 /* SwiftKeychainWrapper */; };
+		2A433DFB2CAA2828007C4524 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A433DFA2CAA2828007C4524 /* TabBarController.swift */; };
 		2A86EB302C80C7CF00D4368C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A86EB2F2C80C7CF00D4368C /* Constants.swift */; };
 		2A86EB322C864CAE00D4368C /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A86EB312C864CAE00D4368C /* AuthViewController.swift */; };
 		2A86EB382C872DD000D4368C /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A86EB372C872DD000D4368C /* WebViewController.swift */; };
@@ -73,6 +74,7 @@
 		2A433DEB2CA2E5EE007C4524 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		2A433DEF2CA5A858007C4524 /* URLSession+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extentions.swift"; sourceTree = "<group>"; };
 		2A433DF12CA5AC79007C4524 /* JSONDecoder+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Extentions.swift"; sourceTree = "<group>"; };
+		2A433DFA2CAA2828007C4524 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		2A86EB2F2C80C7CF00D4368C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2A86EB312C864CAE00D4368C /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		2A86EB372C872DD000D4368C /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		2A432E322C61591600018D50 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				2A433DF92CAA2811007C4524 /* TabBar */,
 				2A433DEE2CA4D511007C4524 /* Extentions */,
 				2A433DED2CA2E606007C4524 /* Services */,
 				2A8A2F3A2C924ED700679783 /* Splash */,
@@ -180,6 +183,14 @@
 				2A433DF12CA5AC79007C4524 /* JSONDecoder+Extentions.swift */,
 			);
 			path = Extentions;
+			sourceTree = "<group>";
+		};
+		2A433DF92CAA2811007C4524 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				2A433DFA2CAA2828007C4524 /* TabBarController.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		2A86EB2D2C7C93D300D4368C /* Profile */ = {
@@ -388,6 +399,7 @@
 				2A432EAB2C737ECC00018D50 /* SingleImageViewController.swift in Sources */,
 				2A433DF22CA5AC79007C4524 /* JSONDecoder+Extentions.swift in Sources */,
 				2A8A2F3C2C924EEB00679783 /* SplashViewController.swift in Sources */,
+				2A433DFB2CAA2828007C4524 /* TabBarController.swift in Sources */,
 				2A433DEC2CA2E5EE007C4524 /* ProfileImageService.swift in Sources */,
 				2A433DEA2CA1B5F4007C4524 /* ProfileService.swift in Sources */,
 				2A432EA52C69CB7000018D50 /* GradientView.swift in Sources */,

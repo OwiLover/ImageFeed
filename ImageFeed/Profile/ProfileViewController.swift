@@ -128,6 +128,7 @@ final class ProfileViewController: UIViewController {
     /*
      имеет ли смысл оставлять дефолтные функции, как эта, например, для тестирования?
      */
+    
     private func configureView() {
         view.backgroundColor = .ypBlack
         
@@ -148,6 +149,4 @@ final class ProfileViewController: UIViewController {
         avatarImageView?.kf.setImage(with: url, placeholder: UIImage(systemName: "person.crop.circle.fill"))
         print("The picture is loaded, link: ", imageURLString)
     }
-    
-    
 }
