@@ -12,7 +12,7 @@ enum ProfileImageErrors: Error {
     case selfIsNilError
     case tokenIsNilError
     case noImageUrlError
-    case profileImageError(Error)
+    case outsideError(Error)
 }
 
 /*
@@ -107,7 +107,7 @@ final class ProfileImageService {
 
             case .failure(let error):
                 print(error)
-                makeCompletionOnMainThread(.failure(ProfileImageErrors.profileImageError(error)))
+                makeCompletionOnMainThread(.failure(ProfileImageErrors.outsideError(error)))
             }
             self.task = nil
         }

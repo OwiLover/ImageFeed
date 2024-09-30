@@ -10,7 +10,7 @@ import Foundation
 enum ProfileServiceErrors: Error {
     case urlCreationError
     case selfIsNilError
-    case profileServiceError(Error)
+    case outsideError(Error)
 }
 
 struct ProfileResult: Codable {
@@ -89,7 +89,6 @@ final class ProfileService {
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        
         let sessionTask = urlSession.makeDecodedDataAndDataTask(with: request) { [weak self] (result: Result<ProfileResult, Error>) in
             guard let self else {
                 print(ProfileServiceErrors.selfIsNilError)
@@ -106,7 +105,7 @@ final class ProfileService {
 
             case .failure(let error):
                 print(error)
-                makeCompletionOnMainThread(.failure(ProfileServiceErrors.profileServiceError(error)))
+                makeCompletionOnMainThread(.failure(ProfileServiceErrors.outsideError(error)))
             }
             self.task = nil
         }

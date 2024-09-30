@@ -11,6 +11,7 @@ enum URLSessionErrors: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case outsideError(Error)
 }
 
 extension URLSession {
@@ -52,9 +53,9 @@ extension URLSession {
                 do {
                     let newData = try JSONDecoder().decodeData(to: T.self, from: data)
                     fulfillCompletionOnTheMainThread(.success(newData))
-                } catch {
-                    print(JSONDecoderErrors.decodingError("Data: \(String(data: data, encoding: .utf8) ?? "")"))
-                    fulfillCompletionOnTheMainThread(.failure(JSONDecoderErrors.decodingError("Data: \(String(data: data, encoding: .utf8) ?? "")")))
+                } catch (let error){
+                    print(URLSessionErrors.outsideError(error))
+                    fulfillCompletionOnTheMainThread(.failure(URLSessionErrors.outsideError(error)))
                 }
             case .failure(let error):
                 print(error)

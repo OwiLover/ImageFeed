@@ -18,7 +18,12 @@ extension JSONDecoder {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return decoder
         }()
-        let data = try decoder.decode(T.self, from: data)
-        return data
+        do {
+            let data = try decoder.decode(T.self, from: data)
+            return data
+        }
+        catch {
+            throw JSONDecoderErrors.decodingError("Data: \(String(data: data, encoding: .utf8) ?? "")")
+        }
     }
 }
