@@ -21,16 +21,16 @@ extension URLSession {
                     print("DataTask success!")
                     completion(.success(data))
                 } else {
-                    print(NetworkError.httpStatusCode(statusCode))
+                    print(URLSessionErrors.httpStatusCode(statusCode))
                     completion(.failure(URLSessionErrors.httpStatusCode(statusCode)))
                 }
             }
             else if let error = error {
-                print(NetworkError.urlRequestError(error))
+                print(URLSessionErrors.urlRequestError(error))
                 completion(.failure(URLSessionErrors.urlRequestError(error)))
             }
             else {
-                print(NetworkError.urlSessionError)
+                print(URLSessionErrors.urlSessionError)
                 completion(.failure(URLSessionErrors.urlSessionError))
             }
         })
@@ -53,7 +53,7 @@ extension URLSession {
                     let newData = try JSONDecoder().decodeData(to: T.self, from: data)
                     fulfillCompletionOnTheMainThread(.success(newData))
                 } catch {
-                    print(JSONDecoderErrors.decodingError)
+                    print(JSONDecoderErrors.decodingError("Data: \(String(data: data, encoding: .utf8) ?? "")"))
                     fulfillCompletionOnTheMainThread(.failure(JSONDecoderErrors.decodingError("Data: \(String(data: data, encoding: .utf8) ?? "")")))
                 }
             case .failure(let error):

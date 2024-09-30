@@ -59,6 +59,9 @@ final class ProfileService {
     private init() {}
     
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
+        /*
+         Решил начинать новую работу без проверки на идентичность токена, поскольку есть возможность, что в профиле может что-то обновиться и рациональнее обрабатывать всегда самый новый task
+         */
         if  task != nil {
             print("New Profile task, stopping current one!")
             task?.cancel()

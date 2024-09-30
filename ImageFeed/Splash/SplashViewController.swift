@@ -36,6 +36,7 @@ final class SplashViewController: UIViewController {
             guard let navigationController = storyBoard.instantiateViewController(withIdentifier: "NavigationController") as? UINavigationController,
             let authViewController = navigationController.viewControllers[0] as? AuthViewController
             else {
+                print("Can't switch to authViewController!")
                 return
             }
             authViewController.delegate = self
