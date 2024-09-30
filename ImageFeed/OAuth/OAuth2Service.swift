@@ -7,19 +7,12 @@
 
 import Foundation
 
-enum NetworkError: Error {
-    case httpStatusCode(Int)
-    case urlRequestError(Error)
-    case urlSessionError
-    case urlLoadingError
-    case decodingError
-}
-
 enum AuthServiceError: Error {
     case invalidRequest
     case badTokenRequest
     case notMainThread
     case authServiceError(Error)
+    case urlLoadingError
 }
 
 final class OAuth2Service {
@@ -83,7 +76,7 @@ final class OAuth2Service {
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard let url: URL = {
             guard var urlComponents = URLComponents(string: Constants.baseURLString) else {
-                print(NetworkError.urlLoadingError)
+                print(AuthServiceError.urlLoadingError)
                 return nil
             }
                 urlComponents.path = "/oauth/token"
@@ -97,7 +90,7 @@ final class OAuth2Service {
             return urlComponents.url
             }()
         else {
-            print(NetworkError.urlLoadingError)
+            print(AuthServiceError.urlLoadingError)
             return nil
         }
         
