@@ -11,7 +11,7 @@ enum AuthServiceError: Error {
     case equalCode
     case badTokenRequest
     case notMainThread
-    case authServiceError(Error)
+    case outsideError(Error)
     case urlLoadingError
 }
 
@@ -28,6 +28,7 @@ final class OAuth2Service {
     
     func fetchAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard Thread.isMainThread else {
+            print(AuthServiceError.notMainThread)
             completion(.failure(AuthServiceError.notMainThread))
             return
         }
@@ -60,11 +61,11 @@ final class OAuth2Service {
             switch result {
             case .success(let result):
                 let accessToken = result.accessToken
-                
+                print(accessToken)
                 completion(.success(accessToken))
             case .failure(let error):
-                print(AuthServiceError.authServiceError(error))
-                completion(.failure(AuthServiceError.authServiceError(error)))
+                print(AuthServiceError.outsideError(error))
+                completion(.failure(AuthServiceError.outsideError(error)))
             }
             self.task = nil
             self.lastCode = nil
