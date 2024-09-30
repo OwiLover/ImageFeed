@@ -8,7 +8,7 @@
 import Foundation
 
 enum AuthServiceError: Error {
-    case invalidRequest
+    case equalCode
     case badTokenRequest
     case notMainThread
     case authServiceError(Error)
@@ -33,17 +33,17 @@ final class OAuth2Service {
         }
         if task != nil {
             if lastCode != code {
-                print("New token, stopping current task!")
+                print("New token, stopping current Auth task!")
                 task?.cancel()
             } else {
-                print("Work already in progress!")
-                completion(.failure(AuthServiceError.invalidRequest))
+                print(AuthServiceError.equalCode)
+                completion(.failure(AuthServiceError.equalCode))
                 return
             }
         } else {
             if lastCode == code {
-                print("Work already in progress!")
-                completion(.failure(AuthServiceError.invalidRequest))
+                print(AuthServiceError.equalCode)
+                completion(.failure(AuthServiceError.equalCode))
                 return
             }
         }
@@ -51,7 +51,8 @@ final class OAuth2Service {
         lastCode = code
         
         guard let tokenRequest = makeOAuthTokenRequest(code: code) else {
-            completion(.failure(AuthServiceError.invalidRequest))
+            print(AuthServiceError.badTokenRequest)
+            completion(.failure(AuthServiceError.badTokenRequest))
             return
         }
         
@@ -62,7 +63,7 @@ final class OAuth2Service {
                 
                 completion(.success(accessToken))
             case .failure(let error):
-                print(error)
+                print(AuthServiceError.authServiceError(error))
                 completion(.failure(AuthServiceError.authServiceError(error)))
             }
             self.task = nil

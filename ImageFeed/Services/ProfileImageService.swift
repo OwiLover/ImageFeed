@@ -106,7 +106,7 @@ final class ProfileImageService {
                 makeCompletionOnMainThread(.success(imageString))
 
             case .failure(let error):
-                print(error)
+                print(ProfileImageErrors.outsideError(error))
                 makeCompletionOnMainThread(.failure(ProfileImageErrors.outsideError(error)))
             }
             self.task = nil

@@ -104,7 +104,7 @@ final class ProfileService {
                 makeCompletionOnMainThread(.success(profile))
 
             case .failure(let error):
-                print(error)
+                print(ProfileServiceErrors.outsideError(error))
                 makeCompletionOnMainThread(.failure(ProfileServiceErrors.outsideError(error)))
             }
             self.task = nil
