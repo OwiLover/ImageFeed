@@ -15,52 +15,76 @@ enum NetworkError: Error {
     case decodingError
 }
 
+enum AuthServiceError: Error {
+    case invalidRequest
+    case badTokenRequest
+    case notMainThread
+    case authServiceError(Error)
+}
+
 final class OAuth2Service {
     
     static let shared = OAuth2Service()
     
+    private let urlSession = URLSession.shared
+    
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
     private init() {}
     
     func fetchAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        do {
-            let tokenRequest = try makeOAuthTokenRequest(code: code)
-            
-            let sessionTask = URLSession.shared.data(for: tokenRequest) { result in
-                let decoder: JSONDecoder = {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    return decoder
-                }()
-                
-                switch result {
-                case .success(let data):
-                    do {
-                        let decodedData = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                
-                        let accessToken = decodedData.accessToken
-                        completion(.success(accessToken))
-                    } catch {
-                        print(NetworkError.decodingError)
-                        completion(.failure(NetworkError.decodingError))
-                    }
-                case .failure(let error):
-                    print(error)
-                    completion(.failure(error))
-                }
+        guard Thread.isMainThread else {
+            completion(.failure(AuthServiceError.notMainThread))
+            return
+        }
+        if task != nil {
+            if lastCode != code {
+                print("New token, stopping current task!")
+                task?.cancel()
+            } else {
+                print("Work already in progress!")
+                completion(.failure(AuthServiceError.invalidRequest))
+                return
             }
-            sessionTask.resume()
+        } else {
+            if lastCode == code {
+                print("Work already in progress!")
+                completion(.failure(AuthServiceError.invalidRequest))
+                return
+            }
         }
-        catch {
-            print(error)
-            completion(.failure(error))
+
+        lastCode = code
+        
+        guard let tokenRequest = makeOAuthTokenRequest(code: code) else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
         }
+        
+        let sessionTask = URLSession.shared.makeDecodedDataAndDataTask(with: tokenRequest) { (result: Result<OAuthTokenResponseBody, Error>) in
+            switch result {
+            case .success(let result):
+                let accessToken = result.accessToken
+                
+                completion(.success(accessToken))
+            case .failure(let error):
+                print(error)
+                completion(.failure(AuthServiceError.authServiceError(error)))
+            }
+            self.task = nil
+            self.lastCode = nil
+        }
+
+        self.task = sessionTask
+        sessionTask.resume()
     }
     
-    private func makeOAuthTokenRequest(code: String) throws -> URLRequest {
-        guard let url: URL = try {
+    private func makeOAuthTokenRequest(code: String) -> URLRequest? {
+        guard let url: URL = {
             guard var urlComponents = URLComponents(string: Constants.baseURLString) else {
                 print(NetworkError.urlLoadingError)
-                throw NetworkError.urlLoadingError
+                return nil
             }
                 urlComponents.path = "/oauth/token"
                 urlComponents.queryItems =  [
@@ -74,49 +98,11 @@ final class OAuth2Service {
             }()
         else {
             print(NetworkError.urlLoadingError)
-            throw NetworkError.urlLoadingError
+            return nil
         }
         
          var request = URLRequest(url: url)
          request.httpMethod = "POST"
          return request
      }
-}
-
-/* Возможно я не правильно понял недочёты в работе, так что напишу здесь
- Вопрос:
- Программа уже выводит логи ошибок, они уходят в .failure и поднимаются по функциям до реализации в AuthViewController.webViewController(_ vc: WebViewController, didAuthenticateWithCode code: String)
- Протестировав смог получить все виды ошибок, однако внёс небольшие исправления и на всякий случай добавил print каждой ошибки перед передачей в .failure
- Если я что-то не правильно понял, то объясните, пожалуйста, более подробно, в каком виде от меня требуется логирование ошибок
- */
-
-extension URLSession {
-    func data(
-        for request: URLRequest,
-        completion: @escaping (Result<Data, Error>) -> Void
-    ) -> URLSessionTask {
-        let fulfillCompletionOnTheMainThread: (Result<Data, Error>) -> Void = { result in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-        
-        let task = dataTask(with: request, completionHandler: { data, response, error in
-            if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                if 200 ..< 300 ~= statusCode {
-                    fulfillCompletionOnTheMainThread(.success(data))
-                } else {
-                    print(NetworkError.httpStatusCode(statusCode))
-                    fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(statusCode)))
-                }
-            } else if let error = error {
-                print(NetworkError.urlRequestError(error))
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlRequestError(error)))
-            } else {
-                print(NetworkError.urlSessionError)
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
-            }
-        })
-        return task
-    }
 }
