@@ -15,22 +15,6 @@ enum ProfileImageErrors: Error {
     case outsideError(Error)
 }
 
-/*
- Есть ли смысл оставлять структуры в сервисах?
- С одной стороны в случае проблем с декодированием, они в одном файле и это удобно
- С другой они занимают место и при открытии файла нужно искать, где начинается класс
- */
-
-struct UserResult: Codable {
-    let profileImage: ProfileImage
-}
-
-struct ProfileImage: Codable {
-    let small: String?
-    let medium: String?
-    let large: String?
-}
-
 final class ProfileImageService {
     
     static let shared = ProfileImageService()

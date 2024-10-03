@@ -13,13 +13,10 @@ enum JSONDecoderErrors: Error {
 
 extension JSONDecoder {
     func decodeData<T:Decodable>(to: T.Type, from data: Data) throws -> T {
-        let decoder: JSONDecoder = {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            return decoder
-        }()
+        self.keyDecodingStrategy = .convertFromSnakeCase
+        
         do {
-            let data = try decoder.decode(T.self, from: data)
+            let data = try self.decode(T.self, from: data)
             return data
         }
         catch {

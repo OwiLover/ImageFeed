@@ -13,39 +13,6 @@ enum ProfileServiceErrors: Error {
     case outsideError(Error)
 }
 
-struct ProfileResult: Codable {
-    let username: String
-    let firstName: String
-    let lastName: String?
-    let email: String
-    let portfolioUrl: URL?
-    let location: String?
-    let bio: String?
-}
-    
-struct Profile {
-    let username: String
-    private let firstName: String
-    private let lastName: String?
-    var name: String {
-        get {
-            return "\(self.firstName) \(self.lastName ?? "")"
-        }
-    }
-    var loginName: String {
-        get {
-            return "@\(username)"
-        }
-    }
-    let bio: String?
-}
-
-extension Profile {
-    init(profileResult: ProfileResult) {
-        self.init(username: profileResult.username, firstName: profileResult.firstName, lastName: profileResult.lastName, bio: profileResult.bio)
-    }
-}
-
 final class ProfileService {
     
     static let shared = ProfileService()
@@ -59,9 +26,7 @@ final class ProfileService {
     private init() {}
     
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
-        /*
-         Решил начинать новую работу без проверки на идентичность токена, поскольку есть возможность, что в профиле может что-то обновиться и рациональнее обрабатывать всегда самый новый task
-         */
+
         if  task != nil {
             print("New Profile task, stopping current one!")
             task?.cancel()

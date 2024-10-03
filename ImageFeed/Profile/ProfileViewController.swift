@@ -125,10 +125,6 @@ final class ProfileViewController: UIViewController {
         _ = addLabel(under: tagLabel, text: bioText, font: UIFont.systemFont(ofSize: 13), color: .ypWhite)
     }
     
-    /*
-     имеет ли смысл оставлять дефолтные функции, как эта, например, для тестирования?
-     */
-    
     private func configureView() {
         view.backgroundColor = .ypBlack
         
