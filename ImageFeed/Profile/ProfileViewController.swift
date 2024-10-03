@@ -6,13 +6,32 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
+    private let profileService = ProfileService.shared
+    
+    private let tokenStorage = OAuthTokenStorage.shared
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    private var avatarImageView: UIImageView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configureView()
+        print("Profile was loaded!")
+        guard let profile = profileService.profile else {
+            return
+        }
+        updateProfileDetails(profile: profile)
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(forName: ProfileImageService.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let self else { return }
+            self.updateAvatar()
+        }
+        
+        updateAvatar()
     }
     
     private func addImageView(under someView: UIView?, image: UIImage?) -> UIImageView? {
@@ -92,13 +111,38 @@ final class ProfileViewController: UIViewController {
         return label
     }
     
+    private func updateProfileDetails(profile: Profile) {
+        configureView(nameText: profile.name, tagText: profile.loginName, bioText: profile.bio)
+    }
+    
+    private func configureView(nameText: String, tagText: String, bioText: String?) {
+        view.backgroundColor = .ypBlack
+        
+        self.avatarImageView = addImageView(under: view, image: nil)
+        _ = addButton(nextTo: avatarImageView, image: UIImage(named: "Exit"), color: .ypRed)
+        let nameLabel = addLabel(under: avatarImageView, text: nameText, font: UIFont.systemFont(ofSize: 23, weight: .bold), color: .ypWhite)
+        let tagLabel = addLabel(under: nameLabel, text: tagText, font: UIFont.systemFont(ofSize: 13), color: .ypGray)
+        _ = addLabel(under: tagLabel, text: bioText, font: UIFont.systemFont(ofSize: 13), color: .ypWhite)
+    }
+    
     private func configureView() {
         view.backgroundColor = .ypBlack
         
-        let avatarImageView = addImageView(under: view, image: UIImage(named: "Photo"))
+        self.avatarImageView = addImageView(under: view, image: UIImage(named: "Photo"))
         _ = addButton(nextTo: avatarImageView, image: UIImage(named: "Exit"), color: .ypRed)
         let nameLabel = addLabel(under: avatarImageView, text: "Екатерина Новикова", font: UIFont.systemFont(ofSize: 23, weight: .bold), color: .ypWhite)
         let tagLabel = addLabel(under: nameLabel, text: "@ekaterina_nov", font: UIFont.systemFont(ofSize: 13), color: .ypGray)
         _ = addLabel(under: tagLabel, text: "Hello, World!", font: UIFont.systemFont(ofSize: 13), color: .ypWhite)
+    }
+    
+    private func updateAvatar() {
+        guard
+            let imageURLString = ProfileImageService.shared.avatarURLString,
+            let url = URL(string: imageURLString)
+        else {
+            return
+        }
+        avatarImageView?.kf.setImage(with: url, placeholder: UIImage(systemName: "person.crop.circle.fill"))
+        print("The picture is loaded, link: ", imageURLString)
     }
 }

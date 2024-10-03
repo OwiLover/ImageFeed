@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class AuthViewController: UIViewController {
     
@@ -17,12 +18,6 @@ final class AuthViewController: UIViewController {
     
     private let oauth2Service = OAuth2Service.shared
     
-    
-    /*
-     Решил написать deinit для интересующих viewController'ов, чтобы проследить за их последовательностью исчезновения
-     и присутствием удаления
-     Вопрос, насколько эффективен данный подход и есть ли другие способы обнаружения retain cycl'ов, помимо детального просмотра в дебагинге?
-     */
     deinit {
         print("AuthView was deleted!")
     }
@@ -109,20 +104,31 @@ final class AuthViewController: UIViewController {
     
     @objc
     private func didTabButton() {
-       performSegue(withIdentifier: webViewIdentifier, sender: self)
+        performSegue(withIdentifier: webViewIdentifier, sender: nil)
     }
 }
 
 extension AuthViewController: WebViewControllerDelegate {
     func webViewController(_ vc: WebViewController, didAuthenticateWithCode code: String) {
+        UIBlockingProgressHUD.show()
+        
         oauth2Service.fetchAuthToken(code: code) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
+            guard let self else { return }
+            
             switch result {
             case .success(let token):
-                guard let self else { return }
                 self.oauthTokenStorage.token = token
                 self.delegate?.didAuthenticate(self)
+                
             case .failure(let error):
                 print("Something went wrong: ", error)
+                let alertController = UIAlertController(title: "Что-то пошло не так(", message: "Не удалось войти в систему", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Ок", style: .default, handler: { [weak self] _ in
+                    self?.dismiss(animated: true)
+                }))
+                self.present(alertController, animated: true, completion: nil)
             }
         }
     }
