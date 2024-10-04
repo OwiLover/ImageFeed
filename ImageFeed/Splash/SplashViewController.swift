@@ -25,6 +25,8 @@ final class SplashViewController: UIViewController {
     
     private let profileImageService = ProfileImageService.shared
     
+    private let imagesListService = ImagesListService.shared
+    
     deinit {
         print("SplashView was deleted!")
     }
@@ -39,6 +41,7 @@ final class SplashViewController: UIViewController {
         
         if let token = storage.token {
             fetchProfile(token)
+            imagesListService.fetchPhotosNextPage()
         }
         else {
             let storyBoard = UIStoryboard(name: "Main", bundle: .main)

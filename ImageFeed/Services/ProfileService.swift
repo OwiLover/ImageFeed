@@ -38,21 +38,11 @@ final class ProfileService {
             }
         }
         
-        guard let url: URL = {
-            guard var urlComponents = URLComponents(string: Constants.defaultApiURLString) else {
-                return nil
-            }
-            urlComponents.path = "/me"
-            return urlComponents.url
-        }()
-        
-        else {
+        guard let request = URLRequest.makeSplashApiGetRequest(path: "/me", token: token) else {
             print(ProfileServiceErrors.urlCreationError)
             completion(.failure(ProfileServiceErrors.urlCreationError))
             return
         }
-        var request = URLRequest(url: url)
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let sessionTask = urlSession.makeDecodedDataAndDataTask(with: request) { [weak self] (result: Result<ProfileResult, Error>) in
             guard let self else {
