@@ -8,12 +8,13 @@
 import Foundation
 
 extension URLRequest {
-    static func makeSplashApiGetRequest(path: String, token: String) -> URLRequest? {
+    static func makeSplashApiGetRequest(path: String, token: String, queryItems: [URLQueryItem] = [URLQueryItem]()) -> URLRequest? {
         guard let url: URL = {
             guard var urlComponents = URLComponents(string: Constants.defaultApiURLString) else {
                 return nil
             }
             urlComponents.path = path
+            urlComponents.queryItems = queryItems
             return urlComponents.url
         }() else { return nil }
         var request = URLRequest(url: url)
