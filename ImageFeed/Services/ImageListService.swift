@@ -32,6 +32,10 @@ class ImageListService {
     
     private init() {}
     
+    /*
+     Возможно стоит добавить escaping функцию для вывода ошибок в ImageListViewController случае, если новая страница с картинками не загрузилась?
+     */
+    
     func fetchPhotosNextPage() {
         
         guard let token = tokenStorage.token else {
