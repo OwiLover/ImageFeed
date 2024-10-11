@@ -21,4 +21,19 @@ extension URLRequest {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }
+    
+    static func makeSplashApiRequest(path: String, token: String, method: String = "GET", queryItems: [URLQueryItem] = [URLQueryItem](), body: [String:Any]? = nil) -> URLRequest? {
+        guard var request = makeSplashApiGetRequest(path: path, token: token, queryItems: queryItems) else { return nil }
+        request.httpMethod = method
+        if let body {
+            do {
+                let jsonBody = try JSONSerialization.data(withJSONObject: body)
+                request.httpBody = jsonBody
+            }
+            catch {
+                return nil
+            }
+        }
+        return request
+    }
 }

@@ -62,6 +62,9 @@
                                                     <state key="normal" image="Active">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="likeButtonTouchUpInside:" destination="mx8-1b-lAi" eventType="touchUpInside" id="0eR-1d-8qy"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" name="YP Background"/>

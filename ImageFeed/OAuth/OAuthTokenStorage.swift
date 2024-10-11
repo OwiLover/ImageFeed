@@ -24,7 +24,10 @@ final class OAuthTokenStorage {
             storage.set(value, forKey: Keys.token.rawValue)
         }
     }
-
+    
+    func deleteToken() {
+        storage.remove(forKey: .init(rawValue: Keys.token.rawValue))
+    }
     private let storage: KeychainWrapper = .standard
     
     private init() {}

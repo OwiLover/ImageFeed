@@ -67,5 +67,13 @@ final class ProfileService {
         self.task = sessionTask
         sessionTask.resume()
     }
+    
+    func resetProfile() {
+        profile = nil
+        if task != nil {
+            task?.cancel()
+            task = nil
+        }
+    }
 }
 

@@ -90,4 +90,12 @@ final class ProfileImageService {
         self.task = sessionTask
         sessionTask.resume()
     }
+    
+    func resetProfileImage() {
+        avatarURLString = nil
+        if task != nil {
+            task?.cancel()
+            task = nil
+        }
+    }
 }
