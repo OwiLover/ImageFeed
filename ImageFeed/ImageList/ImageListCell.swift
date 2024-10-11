@@ -62,14 +62,6 @@ final class ImageListCell: UITableViewCell {
     private func setDateLabel(date: String) {
         dateLabel.text = date
     }
-    
-    func setButtonUnActive() {
-        self.likeButton.isEnabled = false
-    }
-    
-    func setButtonActive() {
-        self.likeButton.isEnabled = true
-    }
 }
 
 
