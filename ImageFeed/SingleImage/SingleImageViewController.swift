@@ -16,19 +16,6 @@ final class SingleImageViewController: UIViewController {
     
     @IBOutlet private var imageView: UIImageView!
     
-    @IBAction private func didTapBackButton(_ sender: Any) {
-        dismiss(animated: true, completion: { [weak self] in
-            guard let self else { return }
-            self.imageView.kf.cancelDownloadTask()
-        })
-    }
-    
-    @IBAction private func didTapShareButton(_ sender: Any) {
-        guard let image = imageView.image else { return }
-        let activityController = UIActivityViewController(activityItems: [image], applicationActivities: .none)
-        present(activityController, animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,31 +25,6 @@ final class SingleImageViewController: UIViewController {
         
         guard let imageUrlString else { return }
         loadImage(imageUrlString: imageUrlString)
-    }
-    
-    private func rescaleAndCenterImageInScrollView(image: UIImage) {
-        let minZoomScale = scrollView.minimumZoomScale
-        let maxZoomScale = scrollView.maximumZoomScale
-        
-        view.layoutIfNeeded()
-        
-        let boundsSize = scrollView.bounds.size
-        let imageSize = image.size
-        
-        let hScale = boundsSize.width / imageSize.width
-        let vScale = boundsSize.height / imageSize.height
-        
-        let scale = min(maxZoomScale, max(minZoomScale, min(hScale, vScale)))
-        
-        scrollView.setZoomScale(scale, animated: false)
-        scrollView.layoutIfNeeded()
-        
-        let newContentSize = scrollView.contentSize
-        
-        let x = (newContentSize.width - boundsSize.width) / 2
-        let y = (newContentSize.height - boundsSize.height) / 2
-        
-        scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
     
     func loadImage(imageUrlString: String) {
@@ -110,6 +72,44 @@ final class SingleImageViewController: UIViewController {
                 showError(imageUrl: imageUrl, placeholder: placeholder)
             }
         }
+    }
+    
+    private func rescaleAndCenterImageInScrollView(image: UIImage) {
+        let minZoomScale = scrollView.minimumZoomScale
+        let maxZoomScale = scrollView.maximumZoomScale
+        
+        view.layoutIfNeeded()
+        
+        let boundsSize = scrollView.bounds.size
+        let imageSize = image.size
+        
+        let hScale = boundsSize.width / imageSize.width
+        let vScale = boundsSize.height / imageSize.height
+        
+        let scale = min(maxZoomScale, max(minZoomScale, min(hScale, vScale)))
+        
+        scrollView.setZoomScale(scale, animated: false)
+        scrollView.layoutIfNeeded()
+        
+        let newContentSize = scrollView.contentSize
+        
+        let x = (newContentSize.width - boundsSize.width) / 2
+        let y = (newContentSize.height - boundsSize.height) / 2
+        
+        scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+    }
+    
+    @IBAction private func didTapBackButton(_ sender: Any) {
+        dismiss(animated: true, completion: { [weak self] in
+            guard let self else { return }
+            self.imageView.kf.cancelDownloadTask()
+        })
+    }
+    
+    @IBAction private func didTapShareButton(_ sender: Any) {
+        guard let image = imageView.image else { return }
+        let activityController = UIActivityViewController(activityItems: [image], applicationActivities: .none)
+        present(activityController, animated: true)
     }
 }
 

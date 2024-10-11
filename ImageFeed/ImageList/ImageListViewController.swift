@@ -10,7 +10,7 @@ import Kingfisher
 
 final class ImageListViewController: UIViewController {
     
-    private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
+    private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
     private var photos: [Photo] = []
     
@@ -20,6 +20,8 @@ final class ImageListViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
+        formatter.dateFormat = "dd MMMM yyyy"
+        formatter.locale = Locale(identifier: "ru_RU")
         return formatter
     }()
 
@@ -41,7 +43,7 @@ final class ImageListViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowSingleImageSegueIdentifier {
+        if segue.identifier == showSingleImageSegueIdentifier {
             guard let viewController = segue.destination as? SingleImageViewController,
                   let indexPath = sender as? IndexPath
             else {
@@ -67,7 +69,8 @@ final class ImageListViewController: UIViewController {
     }
     
     func updateCells() {
-        self.tableView.performBatchUpdates({
+        self.tableView.performBatchUpdates({ [weak self] in
+            guard let self else { return }
             let oldCount = self.photos.count
             self.photos = self.imageListService.photos
             let newCount = self.photos.count
@@ -121,7 +124,7 @@ extension ImageListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
