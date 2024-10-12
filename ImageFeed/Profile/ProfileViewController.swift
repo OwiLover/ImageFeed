@@ -14,6 +14,8 @@ final class ProfileViewController: UIViewController {
     
     private let tokenStorage = OAuthTokenStorage.shared
     
+    private let profileLogoutService = ProfileLogoutService.shared
+    
     private var profileImageServiceObserver: NSObjectProtocol?
     
     private var avatarImageView: UIImageView?
@@ -72,6 +74,8 @@ final class ProfileViewController: UIViewController {
             button.tintColor = color
             return button
         }()
+        
+        button.addTarget(self, action: #selector(createAlert), for: .touchUpInside)
         
         view.addSubview(button)
         
@@ -144,5 +148,23 @@ final class ProfileViewController: UIViewController {
         }
         avatarImageView?.kf.setImage(with: url, placeholder: UIImage(systemName: "person.crop.circle.fill"))
         print("The picture is loaded, link: ", imageURLString)
+    }
+    
+    private func logout() {
+        profileLogoutService.logoutToSplashScreen()
+    }
+    
+    @objc
+    private func createAlert() {
+        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
+        let actionLogout = UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
+            self?.logout()
+        })
+        let actionCancel = UIAlertAction(title: "Нет", style: .default)
+        
+        alert.addAction(actionLogout)
+        alert.addAction(actionCancel)
+        
+        self.present(alert, animated: true)
     }
 }

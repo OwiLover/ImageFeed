@@ -55,20 +55,11 @@ final class ProfileImageService {
             return
         }
         
-        guard let url: URL = {
-            guard var urlComponents = URLComponents(string: Constants.defaultApiURLString) else {
-                return nil
-            }
-            urlComponents.path = "/users/\(username)"
-            return urlComponents.url
-        }()
-        else {
+        guard let request = URLRequest.makeSplashApiGetRequest(path: "/users/\(username)", token: token) else {
             print(ProfileImageErrors.urlCreationError)
             completion(.failure(ProfileImageErrors.urlCreationError))
             return
         }
-        var request = URLRequest(url: url)
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let sessionTask = urlSession.makeDecodedDataAndDataTask(with: request) { [weak self] (result: Result<UserResult, Error>) in
             
@@ -98,5 +89,13 @@ final class ProfileImageService {
         
         self.task = sessionTask
         sessionTask.resume()
+    }
+    
+    func resetProfileImage() {
+        avatarURLString = nil
+        if task != nil {
+            task?.cancel()
+            task = nil
+        }
     }
 }
