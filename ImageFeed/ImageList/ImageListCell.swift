@@ -19,10 +19,6 @@ final class ImageListCell: UITableViewCell {
     @IBOutlet private var likeButton: UIButton!
     @IBOutlet private var cellGradient: UIView!
     
-    @IBAction func likeButtonTouchUpInside(_ sender: Any) {
-        delegate?.imageListCellDidTapLike(self)
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         cellImage.kf.cancelDownloadTask()
@@ -61,6 +57,10 @@ final class ImageListCell: UITableViewCell {
     
     private func setDateLabel(date: String) {
         dateLabel.text = date
+    }
+    
+    @IBAction func likeButtonTouchUpInside(_ sender: Any) {
+        delegate?.imageListCellDidTapLike(self)
     }
 }
 
