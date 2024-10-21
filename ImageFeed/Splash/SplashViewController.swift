@@ -25,6 +25,10 @@ final class SplashViewController: UIViewController {
     
     private let profileImageService = ProfileImageService.shared
     
+    private let imagesListService = ImageListService.shared
+    
+    private let profileLogoutService = ProfileLogoutService.shared
+    
     deinit {
         print("SplashView was deleted!")
     }
@@ -36,22 +40,11 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if let token = storage.token {
             fetchProfile(token)
         }
         else {
-            let storyBoard = UIStoryboard(name: "Main", bundle: .main)
-            guard let navigationController = storyBoard.instantiateViewController(withIdentifier: navigationControllerIdentifier) as? UINavigationController,
-            let authViewController = navigationController.viewControllers[0] as? AuthViewController
-            else {
-                print(SplashViewErrors.badTransition)
-                return
-            }
-            authViewController.delegate = self
-            navigationController.modalPresentationStyle = .fullScreen
-            navigationController.modalTransitionStyle = .crossDissolve
-            present(navigationController, animated: true)
+            switchToLoginPage()
         }
     }
     
@@ -65,6 +58,20 @@ final class SplashViewController: UIViewController {
  
         window.rootViewController = tabBarController
     }
+    
+    private func switchToLoginPage() {
+        let storyBoard = UIStoryboard(name: "Main", bundle: .main)
+        guard let navigationController = storyBoard.instantiateViewController(withIdentifier: navigationControllerIdentifier) as? UINavigationController,
+        let authViewController = navigationController.viewControllers[0] as? AuthViewController
+        else {
+            print(SplashViewErrors.badTransition)
+            return
+        }
+        authViewController.delegate = self
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalTransitionStyle = .crossDissolve
+        present(navigationController, animated: true)
+    }
 }
 
 
@@ -72,12 +79,10 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
-        
-        guard let token = storage.token else {
+        guard storage.token != nil else {
             print(SplashViewErrors.tokenIsNil)
             return
         }
-        fetchProfile(token)
     }
     
     private func fetchProfile(_ token: String) {
@@ -102,8 +107,19 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.switchToTabBarController()
 
             case .failure(let error):
+                let alert = UIAlertController(title: "Что-то пошло не так(", message: "Попробовать снова войти в профиль?", preferredStyle: .alert)
+                let actionRestart = UIAlertAction(title: "Повторить", style: .default, handler: {
+                    _ in
+                    self.fetchProfile(token)
+                })
+                let actionDelete = UIAlertAction(title: "Выйти", style: .default, handler: {
+                    _ in
+                    self.profileLogoutService.logoutToSplashScreen()
+                })
+                alert.addAction(actionDelete)
+                alert.addAction(actionRestart)
+                self.present(alert, animated: true)
                 print(SplashViewErrors.profileFetchError(error))
-                break
             }
         }
     }

@@ -14,6 +14,7 @@ enum JSONDecoderErrors: Error {
 extension JSONDecoder {
     func decodeData<T:Decodable>(to: T.Type, from data: Data) throws -> T {
         self.keyDecodingStrategy = .convertFromSnakeCase
+        self.dateDecodingStrategy = .iso8601
         
         do {
             let data = try self.decode(T.self, from: data)
