@@ -77,7 +77,7 @@ final class OAuth2Service {
     
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard let url: URL = {
-            guard var urlComponents = URLComponents(string: Constants.baseURLString) else {
+            guard var urlComponents = URLComponents(string: Constants.defaultBaseURLString) else {
                 print(AuthServiceError.urlLoadingError)
                 return nil
             }

@@ -8,13 +8,9 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
-    private let profileService = ProfileService.shared
-    
-    private let tokenStorage = OAuthTokenStorage.shared
-    
-    private let profileLogoutService = ProfileLogoutService.shared
+    var presenter: ProfileViewPresenterProtocol?
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
@@ -22,18 +18,33 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Profile was loaded!")
-        guard let profile = profileService.profile else {
-            return
-        }
-        updateProfileDetails(profile: profile)
+        print("Profile was loaded!", presenter ?? " But not the Presenter!")
+        
+        presenter?.updateProfile()
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(forName: ProfileImageService.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
             guard let self else { return }
-            self.updateAvatar()
+            self.presenter?.updateAvatar()
         }
-        
-        updateAvatar()
+
+        presenter?.updateAvatar()
+    }
+    
+    func setPresenter(presenter: ProfileViewPresenterProtocol) {
+        self.presenter = presenter
+        presenter.controller = self
+    }
+    
+    func setAvatarImage(url: URL) {
+        avatarImageView?.kf.setImage(with: url, placeholder: UIImage(systemName: "person.crop.circle.fill"))
+    }
+    
+    func updateProfileDetails(profile: Profile) {
+        configureView(nameText: profile.name, tagText: profile.loginName, bioText: profile.bio)
+    }
+    
+    private func logout() {
+        presenter?.logout()
     }
     
     private func addImageView(under someView: UIView?, image: UIImage?) -> UIImageView? {
@@ -115,10 +126,6 @@ final class ProfileViewController: UIViewController {
         return label
     }
     
-    private func updateProfileDetails(profile: Profile) {
-        configureView(nameText: profile.name, tagText: profile.loginName, bioText: profile.bio)
-    }
-    
     private func configureView(nameText: String, tagText: String, bioText: String?) {
         view.backgroundColor = .ypBlack
         
@@ -137,21 +144,6 @@ final class ProfileViewController: UIViewController {
         let nameLabel = addLabel(under: avatarImageView, text: "Екатерина Новикова", font: UIFont.systemFont(ofSize: 23, weight: .bold), color: .ypWhite)
         let tagLabel = addLabel(under: nameLabel, text: "@ekaterina_nov", font: UIFont.systemFont(ofSize: 13), color: .ypGray)
         _ = addLabel(under: tagLabel, text: "Hello, World!", font: UIFont.systemFont(ofSize: 13), color: .ypWhite)
-    }
-    
-    private func updateAvatar() {
-        guard
-            let imageURLString = ProfileImageService.shared.avatarURLString,
-            let url = URL(string: imageURLString)
-        else {
-            return
-        }
-        avatarImageView?.kf.setImage(with: url, placeholder: UIImage(systemName: "person.crop.circle.fill"))
-        print("The picture is loaded, link: ", imageURLString)
-    }
-    
-    private func logout() {
-        profileLogoutService.logoutToSplashScreen()
     }
     
     @objc
