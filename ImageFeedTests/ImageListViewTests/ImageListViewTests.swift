@@ -112,7 +112,7 @@ final class ImageListViewTests: XCTestCase {
      На ум пришло только заставить подождать пару секунд тест с помощью asyncAfter, результат приведён ниже
      */
     
-    func testPresenterDidTapLikeExtended() {
+    func testPresenterDidTapLikeServiceResultTrue() {
 //        given
         let imageListServiceSpy = ImageListServiceSpy(numberOfPhotos: 10)
                 
@@ -140,6 +140,38 @@ final class ImageListViewTests: XCTestCase {
         XCTAssertTrue(controller.hideLoadingIndicatorDidCalled)
         XCTAssertTrue(controller.checkLoadingCallOrder())
         XCTAssert(cell.setLikeStatusCalled)
+        XCTAssertTrue(imageListServiceSpy.changeLikeWasCalled)
+    }
+    
+    
+    func testPresenterDidTapLikeServiceResultFalse() {
+//        given
+        let imageListServiceSpy = ImageListServiceSpy(numberOfPhotos: 10, willReturnSuccess: false)
+                
+        let presenter = ImageListViewPresenter(imageListService: imageListServiceSpy)
+                
+        let controller = ImageListViewControllerSpy()
+        controller.setPresenter(presenter: presenter)
+                
+        let cell = ImageListCellSpy()
+        
+//        when
+        presenter.updateCells()
+        presenter.didTapLike(cell: cell)
+        
+        let timeInSeconds = 2.0
+        let expectation = XCTestExpectation(description: "Waiting for something")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeInSeconds) {
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: timeInSeconds + 1.0)
+
+//        then
+        XCTAssertTrue(controller.showLoadingIndicatorDidCalled)
+        XCTAssertTrue(controller.hideLoadingIndicatorDidCalled)
+        XCTAssertTrue(controller.checkLoadingCallOrder())
+        XCTAssertTrue(controller.showErrorAlertDidCalled)
         XCTAssertTrue(imageListServiceSpy.changeLikeWasCalled)
     }
 }
