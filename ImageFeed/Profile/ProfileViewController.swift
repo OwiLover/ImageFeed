@@ -18,16 +18,14 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Profile was loaded!", presenter ?? " But not the Presenter!")
-        
-        presenter?.updateProfile()
+        print("Profile Controller was loaded!", presenter != nil ? " With his presenter!" : " But not his Presenter!")
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(forName: ProfileImageService.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
             guard let self else { return }
             self.presenter?.updateAvatar()
         }
-
-        presenter?.updateAvatar()
+        
+        presenter?.viewDidLoad()
     }
     
     func setPresenter(presenter: ProfileViewPresenterProtocol) {

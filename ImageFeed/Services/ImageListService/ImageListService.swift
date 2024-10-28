@@ -14,7 +14,7 @@ enum ImageListServiceErrors: Error {
     case outsideError(Error)
 }
 
-class ImageListService {
+final class ImageListService: ImageListServiceProtocol {
     
     static let shared = ImageListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")

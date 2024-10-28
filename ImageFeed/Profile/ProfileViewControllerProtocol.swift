@@ -8,6 +8,8 @@
 import Foundation
 
 protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    
     func setPresenter(presenter: ProfileViewPresenterProtocol)
     
     func updateProfileDetails(profile: Profile)

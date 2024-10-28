@@ -11,8 +11,6 @@ protocol ProfileViewPresenterProtocol: AnyObject {
     var controller: ProfileViewControllerProtocol? { get set }
     
     func viewDidLoad()
-
-    func getAvatarUrl() -> URL?
     
     func updateAvatar()
     func updateProfile()

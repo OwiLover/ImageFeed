@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProfileViewPresenter: ProfileViewPresenterProtocol {    
+final class ProfileViewPresenter: ProfileViewPresenterProtocol {    
     
     weak var controller: ProfileViewControllerProtocol?
     
@@ -15,24 +15,21 @@ class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     private let profileImageService: ProfileImageServiceProtocol
     
-    private let tokenStorage: OAuthTokenStorageProtocol
-    
     private let profileLogoutService: ProfileLogoutServiceProtocol
     
     init(profileService: ProfileServiceProtocol = ProfileService.shared,
          profileImageService: ProfileImageServiceProtocol = ProfileImageService.shared,
-         tokenStorage: OAuthTokenStorageProtocol = OAuthTokenStorage.shared,
          profileLogoutService: ProfileLogoutServiceProtocol = ProfileLogoutService.shared) {
 
         self.profileService = profileService
         self.profileImageService = profileImageService
-        self.tokenStorage = tokenStorage
         self.profileLogoutService = profileLogoutService
         print("presenter was initialised!")
     }
     
     func viewDidLoad() {
-        
+        updateProfile()
+        updateAvatar()
     }
     
     func updateAvatar() {
@@ -44,10 +41,6 @@ class ProfileViewPresenter: ProfileViewPresenterProtocol {
         }
         controller?.setAvatarImage(url: url)
         print("The picture is loaded, link: ", imageURLString)
-    }
-    
-    func getAvatarUrl() -> URL? {
-        return nil
     }
     
     func updateProfile() {

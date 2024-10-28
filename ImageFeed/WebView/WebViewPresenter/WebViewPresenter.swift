@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class WebViewPresenter: WebViewPresenterProtocol {
+final class WebViewPresenter: WebViewPresenterProtocol {
 
     weak var webView: WebViewViewControllerProtocol?
     
