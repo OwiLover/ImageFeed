@@ -8,11 +8,11 @@
 import UIKit
 import Kingfisher
 
-final class ImageListCell: UITableViewCell {
+final class ImageListCell: UITableViewCell, ImageListCellProtocol {
     
     static let reuseIdentifier = "ImageListCell"
     
-    private weak var delegate: ImageListCellDelegate?
+    private(set) weak var delegate: ImageListCellDelegate?
     
     @IBOutlet private var cellImage: UIImageView!
     @IBOutlet private var dateLabel: UILabel!

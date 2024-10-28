@@ -19,10 +19,6 @@ class ImageListViewPresenterSpy: ImageListViewPresenterProtocol {
         viewDidLoadCalled = true
     }
     
-    func fetchPhotosNextPage() {
-        
-    }
-    
     func findPhotoIndexFromPhotos(photo: SelectedPhoto) -> Int? {
         return nil
     }
@@ -31,21 +27,13 @@ class ImageListViewPresenterSpy: ImageListViewPresenterProtocol {
         return nil
     }
     
-    func updatePhotoAt(index: Int, newPhoto: ImageFeed.Photo) {
-        
-    }
+    func fetchPhotosNextPage() { }
     
-    func updateCells() {
-        
-    }
+    func updatePhotoAt(index: Int, newPhoto: ImageFeed.Photo) { }
+
+    func updateCells() { }
     
-    func configureCell(for cell: ImageFeed.ImageListCell, with indexPath: IndexPath) {
-        
-    }
+    func configureCell(for cell: ImageFeed.ImageListCellProtocol, with indexPath: IndexPath) { }
     
-    func didTabLike(cell: ImageFeed.ImageListCell) {
-        
-    }
-    
-    
+    func didTapLike(cell: ImageFeed.ImageListCellProtocol) { }
 }

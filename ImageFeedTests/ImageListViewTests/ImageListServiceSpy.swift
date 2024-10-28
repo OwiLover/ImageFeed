@@ -35,7 +35,7 @@ class ImageListServiceSpy: ImageListServiceProtocol {
     func changeLike(photoId: String, isLiked: Bool, completion: @escaping (Result<ImageFeed.SelectedPhotoResult, any Error>) -> Void) {
         changeLikeWasCalled = true
     
-        let selectedPhoto = SelectedPhoto(id: "123", likedByUser: true)
+        let selectedPhoto = SelectedPhoto(id: "1", likedByUser: true)
         let selectedPhotoResult = SelectedPhotoResult(photo: selectedPhoto)
         completion(Result.success(selectedPhotoResult))
     }

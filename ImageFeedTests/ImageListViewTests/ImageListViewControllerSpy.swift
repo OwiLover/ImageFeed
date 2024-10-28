@@ -9,7 +9,7 @@ import Foundation
 import XCTest
 
 class ImageListViewControllerSpy: ImageListViewControllerProtocol {
-    
+
     var presenter: ImageListViewPresenterProtocol?
     
     var updateCellDidCalled = false
@@ -42,13 +42,13 @@ class ImageListViewControllerSpy: ImageListViewControllerProtocol {
         counts = (oldCount, newCount)
     }
     
-    func configCell(for cell: ImageFeed.ImageListCell, photo: ImageFeed.Photo, date: String) {
+    func configCell(for cell: ImageFeed.ImageListCellProtocol, photo: ImageFeed.Photo, date: String) {
         configCellDidCalled = true
         
         configInfo = (photo, date)
     }
     
-    func getImageListCellIndexPath(_ cell: ImageFeed.ImageListCell) -> IndexPath? {
+    func getImageListCellIndexPath(_ cell: ImageFeed.ImageListCellProtocol) -> IndexPath? {
         return IndexPath(row: 1, section: 1)
     }
     

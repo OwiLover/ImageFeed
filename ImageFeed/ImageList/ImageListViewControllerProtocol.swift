@@ -12,9 +12,9 @@ protocol ImageListViewControllerProtocol: AnyObject {
     func setPresenter(presenter: ImageListViewPresenterProtocol)
     
     func updateCells(oldCount: Int, newCount: Int)
-    func configCell(for cell: ImageListCell, photo: Photo, date: String)
+    func configCell(for cell: ImageListCellProtocol, photo: Photo, date: String)
     
-    func getImageListCellIndexPath(_ cell: ImageListCell) -> IndexPath?
+    func getImageListCellIndexPath(_ cell: ImageListCellProtocol) -> IndexPath?
     
     func showLoadingIndicator()
     func hideLoadingIndicator()

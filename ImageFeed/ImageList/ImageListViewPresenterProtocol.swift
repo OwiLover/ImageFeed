@@ -16,7 +16,7 @@ protocol ImageListViewPresenterProtocol: AnyObject {
     func fetchPhotosNextPage()
     
     func updateCells()
-    func configureCell(for cell: ImageListCell, with indexPath: IndexPath)
+    func configureCell(for cell: ImageListCellProtocol, with indexPath: IndexPath)
     
-    func didTabLike(cell: ImageListCell)
+    func didTapLike(cell: ImageListCellProtocol)
 }

@@ -46,7 +46,7 @@ class ImageListViewPresenter: ImageListViewPresenterProtocol {
         controller?.updateCells(oldCount: oldCount, newCount: newCount)
     }
     
-    func configureCell(for cell: ImageListCell, with indexPath: IndexPath) {
+    func configureCell(for cell: ImageListCellProtocol, with indexPath: IndexPath) {
         guard let photo = photos[safe: indexPath.row], (controller != nil) else { return }
         
         var date = ""
@@ -57,7 +57,7 @@ class ImageListViewPresenter: ImageListViewPresenterProtocol {
         controller?.configCell(for: cell, photo: photo, date: date)
     }
     
-    func didTabLike(cell: ImageListCell) {
+    func didTapLike(cell: ImageListCellProtocol) {
         guard let indexPath = controller?.getImageListCellIndexPath(cell), let photo = self.getPhotoFromPhotos(index: indexPath.row) else { return }
         
         controller?.showLoadingIndicator()

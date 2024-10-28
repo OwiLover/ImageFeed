@@ -76,7 +76,7 @@ final class ImageListViewTests: XCTestCase {
         let controller = ImageListViewControllerSpy()
         controller.setPresenter(presenter: presenter)
         
-        let cell = ImageListCell()
+        let cell = ImageListCellDummy()
         let indexPath = IndexPath(row: 0, section: 0)
 
 //        when
@@ -88,7 +88,7 @@ final class ImageListViewTests: XCTestCase {
         XCTAssertNotEqual("", controller.configInfo?.date)
     }
     
-    func testPresenterDidTabLike() {
+    func testPresenterDidTapLike() {
 //        given
         let imageListServiceSpy = ImageListServiceSpy(numberOfPhotos: 10)
         
@@ -97,17 +97,49 @@ final class ImageListViewTests: XCTestCase {
         let controller = ImageListViewControllerSpy()
         controller.setPresenter(presenter: presenter)
         
-        let cell = ImageListCell()
+        let cell = ImageListCellDummy()
 //        when
         presenter.updateCells()
-        presenter.didTabLike(cell: cell)
+        presenter.didTapLike(cell: cell)
 //        then
         XCTAssertTrue(controller.showLoadingIndicatorDidCalled)
         XCTAssertTrue(imageListServiceSpy.changeLikeWasCalled)
     }
+    
+    /* 
+     Не совсем понятно, как можно протестировать асинхронный результат работы ImageListService внутри функции didTapLike,
+     чтобы проверить, сработала-ли функция контроллера hideLoadingIndicator и другие функции
+     На ум пришло только заставить подождать пару секунд тест с помощью asyncAfter, результат приведён ниже
+     */
+    
+    func testPresenterDidTapLikeExtended() {
+//        given
+        let imageListServiceSpy = ImageListServiceSpy(numberOfPhotos: 10)
+                
+        let presenter = ImageListViewPresenter(imageListService: imageListServiceSpy)
+                
+        let controller = ImageListViewControllerSpy()
+        controller.setPresenter(presenter: presenter)
+                
+        let cell = ImageListCellSpy()
+        
+//        when
+        presenter.updateCells()
+        presenter.didTapLike(cell: cell)
+        
+        let timeInSeconds = 2.0
+        let expectation = XCTestExpectation(description: "Waiting for something")
 
-/* не совсем понятно, как можно протестировать асинхронный результат работы ImageListService внутри функции didTabLike, чтобы проверить, сработала-ли функция контроллера hideLoadingIndicator
-   на ум приходит сделать Spy презентера с семафором, однако смысл в тестировании мока не совсем понятно
- */
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeInSeconds) {
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: timeInSeconds + 1.0)
 
+//        then
+        XCTAssertTrue(controller.showLoadingIndicatorDidCalled)
+        XCTAssertTrue(controller.hideLoadingIndicatorDidCalled)
+        XCTAssertTrue(controller.checkLoadingCallOrder())
+        XCTAssert(cell.setLikeStatusCalled)
+        XCTAssertTrue(imageListServiceSpy.changeLikeWasCalled)
+    }
 }

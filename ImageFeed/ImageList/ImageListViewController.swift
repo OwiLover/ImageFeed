@@ -66,7 +66,7 @@ final class ImageListViewController: UIViewController, ImageListViewControllerPr
         })
     }
     
-    func getImageListCellIndexPath(_ cell: ImageListCell) -> IndexPath? {
+    func getImageListCellIndexPath(_ cell: ImageListCellProtocol) -> IndexPath? {
         return tableView.indexPath(for: cell)
     }
     
@@ -89,7 +89,7 @@ final class ImageListViewController: UIViewController, ImageListViewControllerPr
         present(alertController, animated: true, completion: nil)
     }
     
-    func configCell(for cell: ImageListCell, photo: Photo, date: String) {
+    func configCell(for cell: ImageListCellProtocol, photo: Photo, date: String) {
         cell.setupDelegate(delegate: self)
         cell.configureCell(imageUrlString: photo.thumbImageURL, date: date, likeStatus: photo.isLiked)
     }
@@ -142,6 +142,6 @@ extension ImageListViewController: UITableViewDelegate {
 
 extension ImageListViewController: ImageListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImageListCell) {
-        presenter?.didTabLike(cell: cell)
+        presenter?.didTapLike(cell: cell)
     }
 }
