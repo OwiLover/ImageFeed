@@ -108,5 +108,11 @@ class Image_FeedUITests: XCTestCase {
         sleep(2)
         
         app.alerts["ByeBye"].scrollViews.otherElements.buttons["yes"].tap()
+        
+        sleep(2)
+        
+        let button = app.buttons["Authenticate"]
+        
+        XCTAssertTrue(button.waitForExistence(timeout: 5))
     }
 }

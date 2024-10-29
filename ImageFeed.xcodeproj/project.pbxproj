@@ -261,14 +261,9 @@
 		2A432EA12C69532600018D50 /* ImageList */ = {
 			isa = PBXGroup;
 			children = (
-				2A432E372C61591600018D50 /* ImageListViewController.swift */,
-				2A9C04772CCE8EF300DCF02A /* ImageListViewPresenter.swift */,
-				2A9C04792CCE8F1300DCF02A /* ImageListViewPresenterProtocol.swift */,
-				2A9C047D2CCEBF7800DCF02A /* ImageListViewControllerProtocol.swift */,
-				2A41E7E72CB4AC6B006891E5 /* ImageListCell.swift */,
-				2A432E9F2C6952F900018D50 /* ImageListCellOld.swift */,
-				2A41E7E52CB473D4006891E5 /* ImageListCellDelegate.swift */,
-				2A9C048D2CCFEA3D00DCF02A /* ImageListCellProtocol.swift */,
+				2AAEC3EE2CD0883B003143E8 /* Controller */,
+				2AAEC3EF2CD08859003143E8 /* Presenter */,
+				2AAEC3F02CD08867003143E8 /* Cell */,
 			);
 			path = ImageList;
 			sourceTree = "<group>";
@@ -321,10 +316,8 @@
 		2A86EB2D2C7C93D300D4368C /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				2A432EA82C6E6EA300018D50 /* ProfileViewController.swift */,
-				2ABA25A92CC957D600121462 /* ProfileViewPresenter.swift */,
-				2ABA25AB2CC957E500121462 /* ProfileViewControllerProtocol.swift */,
-				2ABA25AD2CC957F400121462 /* ProfileViewPresenterProtocol.swift */,
+				2AAEC3F12CD08879003143E8 /* Controller */,
+				2AAEC3F22CD08885003143E8 /* Presenter */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -377,8 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				2ABA259E2CC83BFA00121462 /* WebViewTests.swift */,
-				2ABA25A52CC9443600121462 /* WebViewPresenterSpy.swift */,
-				2ABA25A72CC9464600121462 /* WebViewControllerSpy.swift */,
+				2AAEC3FA2CD0891D003143E8 /* Spies */,
 			);
 			path = WebViewTests;
 			sourceTree = "<group>";
@@ -387,11 +379,9 @@
 			isa = PBXGroup;
 			children = (
 				2A9C04692CCD873D00DCF02A /* ProfileViewTests.swift */,
-				2A9C046B2CCD89E000DCF02A /* ProfileViewPresenterSpy.swift */,
-				2A9C046D2CCD8F2900DCF02A /* ProfileViewControllerSpy.swift */,
-				2A9C046F2CCDA15000DCF02A /* ProfileImageServiceStub.swift */,
-				2A9C04712CCDA20000DCF02A /* ProfileServiceStub.swift */,
-				2A9C04732CCDA67800DCF02A /* ProfileLogoutServiceDummy.swift */,
+				2AAEC3F92CD0890B003143E8 /* Dummies */,
+				2AAEC3F82CD088FF003143E8 /* Stubs */,
+				2AAEC3F72CD088F3003143E8 /* Spies */,
 			);
 			path = ProfileViewTests;
 			sourceTree = "<group>";
@@ -419,11 +409,8 @@
 			isa = PBXGroup;
 			children = (
 				2A9C04832CCEEF6B00DCF02A /* ImageListViewTests.swift */,
-				2A9C04872CCEEF9B00DCF02A /* ImageListViewControllerSpy.swift */,
-				2A9C04892CCEEFA900DCF02A /* ImageListViewPresenterSpy.swift */,
-				2A9C048B2CCF098D00DCF02A /* ImageListServiceSpy.swift */,
-				2A9C048F2CCFEAE800DCF02A /* ImageListCellSpy.swift */,
-				2A9C04912CCFF2AD00DCF02A /* ImageListCellDummy.swift */,
+				2AAEC3F62CD088E0003143E8 /* Dummies */,
+				2AAEC3F52CD088CB003143E8 /* Spies */,
 			);
 			path = ImageListViewTests;
 			sourceTree = "<group>";
@@ -437,12 +424,129 @@
 			path = ImageFeedUITests;
 			sourceTree = "<group>";
 		};
-		2ABA25932CC6D38600121462 /* Auth */ = {
+		2AAEC3EE2CD0883B003143E8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2A432E372C61591600018D50 /* ImageListViewController.swift */,
+				2A9C047D2CCEBF7800DCF02A /* ImageListViewControllerProtocol.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2AAEC3EF2CD08859003143E8 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				2A9C04772CCE8EF300DCF02A /* ImageListViewPresenter.swift */,
+				2A9C04792CCE8F1300DCF02A /* ImageListViewPresenterProtocol.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		2AAEC3F02CD08867003143E8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				2A41E7E72CB4AC6B006891E5 /* ImageListCell.swift */,
+				2A432E9F2C6952F900018D50 /* ImageListCellOld.swift */,
+				2A41E7E52CB473D4006891E5 /* ImageListCellDelegate.swift */,
+				2A9C048D2CCFEA3D00DCF02A /* ImageListCellProtocol.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		2AAEC3F12CD08879003143E8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2A432EA82C6E6EA300018D50 /* ProfileViewController.swift */,
+				2ABA25AB2CC957E500121462 /* ProfileViewControllerProtocol.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2AAEC3F22CD08885003143E8 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				2ABA25A92CC957D600121462 /* ProfileViewPresenter.swift */,
+				2ABA25AD2CC957F400121462 /* ProfileViewPresenterProtocol.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		2AAEC3F32CD088AF003143E8 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				2ABA25962CC712D300121462 /* AuthHelper.swift */,
+				2ABA25942CC6D3AC00121462 /* AuthHelperProtocol.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		2AAEC3F42CD088BB003143E8 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
 				2A86EB2F2C80C7CF00D4368C /* AuthConfiguration.swift */,
-				2ABA25942CC6D3AC00121462 /* AuthHelperProtocol.swift */,
-				2ABA25962CC712D300121462 /* AuthHelper.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		2AAEC3F52CD088CB003143E8 /* Spies */ = {
+			isa = PBXGroup;
+			children = (
+				2A9C048B2CCF098D00DCF02A /* ImageListServiceSpy.swift */,
+				2A9C04872CCEEF9B00DCF02A /* ImageListViewControllerSpy.swift */,
+				2A9C04892CCEEFA900DCF02A /* ImageListViewPresenterSpy.swift */,
+				2A9C048F2CCFEAE800DCF02A /* ImageListCellSpy.swift */,
+			);
+			path = Spies;
+			sourceTree = "<group>";
+		};
+		2AAEC3F62CD088E0003143E8 /* Dummies */ = {
+			isa = PBXGroup;
+			children = (
+				2A9C04912CCFF2AD00DCF02A /* ImageListCellDummy.swift */,
+			);
+			path = Dummies;
+			sourceTree = "<group>";
+		};
+		2AAEC3F72CD088F3003143E8 /* Spies */ = {
+			isa = PBXGroup;
+			children = (
+				2A9C046B2CCD89E000DCF02A /* ProfileViewPresenterSpy.swift */,
+				2A9C046D2CCD8F2900DCF02A /* ProfileViewControllerSpy.swift */,
+			);
+			path = Spies;
+			sourceTree = "<group>";
+		};
+		2AAEC3F82CD088FF003143E8 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				2A9C046F2CCDA15000DCF02A /* ProfileImageServiceStub.swift */,
+				2A9C04712CCDA20000DCF02A /* ProfileServiceStub.swift */,
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
+		2AAEC3F92CD0890B003143E8 /* Dummies */ = {
+			isa = PBXGroup;
+			children = (
+				2A9C04732CCDA67800DCF02A /* ProfileLogoutServiceDummy.swift */,
+			);
+			path = Dummies;
+			sourceTree = "<group>";
+		};
+		2AAEC3FA2CD0891D003143E8 /* Spies */ = {
+			isa = PBXGroup;
+			children = (
+				2ABA25A52CC9443600121462 /* WebViewPresenterSpy.swift */,
+				2ABA25A72CC9464600121462 /* WebViewControllerSpy.swift */,
+			);
+			path = Spies;
+			sourceTree = "<group>";
+		};
+		2ABA25932CC6D38600121462 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				2AAEC3F42CD088BB003143E8 /* Configuration */,
+				2AAEC3F32CD088AF003143E8 /* Helper */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
