@@ -9,6 +9,7 @@ import Foundation
 import SwiftKeychainWrapper
 
 final class OAuthTokenStorage {
+    
     enum Keys: String {
         case token = "token"
     }
@@ -25,10 +26,11 @@ final class OAuthTokenStorage {
         }
     }
     
+    private let storage: KeychainWrapper = .standard
+    
     func deleteToken() {
         storage.remove(forKey: .init(rawValue: Keys.token.rawValue))
     }
-    private let storage: KeychainWrapper = .standard
     
     private init() {}
 }

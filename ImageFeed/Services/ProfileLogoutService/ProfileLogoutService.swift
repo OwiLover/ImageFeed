@@ -13,7 +13,8 @@ enum ProfileLogoutServiceErrors: Error {
     case invalidWindowConfiguration
 }
 
-final class ProfileLogoutService {
+final class ProfileLogoutService: ProfileLogoutServiceProtocol {
+    
     static let shared = ProfileLogoutService()
     
     private let profileService = ProfileService.shared

@@ -12,7 +12,11 @@ final class SingleImageViewController: UIViewController {
     
     var imageUrlString: String?
     
+    @IBOutlet weak var backButton: UIButton!
+    
     @IBOutlet private var scrollView: UIScrollView!
+    
+    @IBOutlet weak var shareButton: UIButton!
     
     @IBOutlet private var imageView: UIImageView!
     

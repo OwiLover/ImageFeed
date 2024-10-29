@@ -15,7 +15,7 @@ enum ProfileImageErrors: Error {
     case outsideError(Error)
 }
 
-final class ProfileImageService {
+final class ProfileImageService: ProfileImageServiceProtocol {
     
     static let shared = ProfileImageService()
     

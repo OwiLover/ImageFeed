@@ -21,7 +21,7 @@ struct Photo {
     let isLiked: Bool
 }
 
-extension Photo {
+extension Photo: Equatable {
     init(photoResult: PhotoResult) {
         self.id = photoResult.id
         self.width = photoResult.width

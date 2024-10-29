@@ -51,8 +51,9 @@
                                                     <color key="textColor" name="YP White"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhL-V1-0MK" userLabel="Like Button">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhL-V1-0MK" userLabel="LikeButton">
                                                     <rect key="frame" x="354" y="4" width="44" height="44"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="LikeButton"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="0cM-k8-Man"/>
                                                         <constraint firstAttribute="height" constant="44" id="7mf-oC-PHx"/>
@@ -161,8 +162,9 @@
                                     <outlet property="delegate" destination="L9V-CC-Ge7" id="hSK-80-lgC"/>
                                 </connections>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0H-JY-SyC">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0H-JY-SyC" userLabel="BackButton">
                                 <rect key="frame" x="9" y="9" width="44" height="44"/>
+                                <accessibility key="accessibilityConfiguration" identifier="BackButton"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="D95-PS-mEM"/>
                                     <constraint firstAttribute="height" constant="44" id="M7x-mZ-klO"/>
@@ -202,8 +204,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="d0H-JY-SyC" id="PHf-iH-aib"/>
                         <outlet property="imageView" destination="44z-8a-iI9" id="i4r-OB-MMh"/>
                         <outlet property="scrollView" destination="YLU-T1-cMm" id="YnK-xt-her"/>
+                        <outlet property="shareButton" destination="lFj-Mh-fQ1" id="vh6-VI-jt3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BDr-TU-TIS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -232,7 +236,7 @@
         <!--Web View Controller-->
         <scene sceneID="tRn-s2-zoc">
             <objects>
-                <viewController id="rOB-I0-vXL" customClass="WebViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewController" id="rOB-I0-vXL" customClass="WebViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XXn-EK-D7k">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
