@@ -14,6 +14,10 @@ enum WebViewErrors: Error {
     case codeItemIsNil
 }
 
+enum WebViewControllerIdentifiers: String {
+    case webView = "UnsplashWebView"
+}
+
 final class WebViewController: UIViewController, WebViewViewControllerProtocol {
     
     var presenter: WebViewPresenterProtocol?
@@ -65,6 +69,8 @@ final class WebViewController: UIViewController, WebViewViewControllerProtocol {
     
     private func createWebView() -> WKWebView {
         let webView = WKWebView()
+        
+        webView.accessibilityIdentifier = WebViewControllerIdentifiers.webView.rawValue
         
         view.addSubview(webView)
         

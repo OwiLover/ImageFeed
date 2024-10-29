@@ -78,6 +78,8 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         let button:UIButton = {
             let button = UIButton()
             
+            button.accessibilityIdentifier = "logoutButton"
+            
             button.setTitle(.none, for: .normal)
             button.setImage(image, for: .normal)
             button.tintColor = color
@@ -147,13 +149,21 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     @objc
     private func createAlert() {
         let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
+
         let actionLogout = UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
             self?.logout()
         })
+        
+        actionLogout.accessibilityIdentifier = "yes"
+        
         let actionCancel = UIAlertAction(title: "Нет", style: .default)
+        
+        actionCancel.accessibilityIdentifier = "no"
         
         alert.addAction(actionLogout)
         alert.addAction(actionCancel)
+        
+        alert.view.accessibilityIdentifier = "ByeBye"
         
         self.present(alert, animated: true)
     }
